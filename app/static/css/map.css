@@ -1,0 +1,19 @@
+.svg {
+    float: left;
+    display: block;
+    background: #5c5c5c;
+    color: #bebebe;
+    font-family: "Lucida Console", Monaco, monospace;
+    margin: 10px 10px 10px 10px;
+    border-left: solid 0.5px red;
+    border-right: solid 0.5px red;
+}
+
+.country {
+    fill: #999;
+    stroke: black;
+    stroke-width: 0.5px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+}
