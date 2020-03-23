@@ -1,7 +1,9 @@
 # COVID-19 stats
 
-![python](https://img.shields.io/badge/v3.7-Python-green)
+![python](https://img.shields.io/badge/v3.7-Python3-green)
 ![flask](https://img.shields.io/badge/v1.1-flask-green)
+![jinja](https://img.shields.io/badge/v2.10.3-jinja-green)
+![javascirpt](https://img.shields.io/badge/v1.5-javascript-yellow)
 ![d3js](https://img.shields.io/badge/v5-d3js-yellow)
 ![spinner](https://img.shields.io/badge/v2-spinner-yellow)
 
