@@ -3,6 +3,7 @@ import csv
 from datetime import datetime
 #from cachetools import cached, TTLCache
 from app.utils import countrycodes, date as date_util
+import re
 
 """
 Base URL for fetching data.
@@ -11,7 +12,6 @@ base_url = 'https://raw.githubusercontent.com/CSSEGISandData/2019-nCoV/master/cs
 
 #@cached(cache=TTLCache(maxsize=1024, ttl=3600))
 def get_data(category):
-    print(category)
     """
     Retrieves the data for the provided type. The data is cached for 1 hour.
     """
@@ -35,6 +35,8 @@ def get_data(category):
     for item in data:
         # Filter out all the dates.
         history = dict(filter(lambda element: date_util.is_date(element[0]), item.items()))
+        #sorted date history
+        history = sorted_history_date(history)
 
         # Country for this location.
         country = item['Country/Region']
@@ -205,3 +207,36 @@ def get_all_data():
         'last_updated': datetime.utcnow().isoformat() + 'Z',
         'source': 'https://github.com/ExpDev07/coronavirus-tracker-api',
     }
+
+"""
+Sorted data by date
+"""
+def sorted_history_date(data):
+    data = formated_date(data)
+    return dict(sorted(data.items(), key = lambda x:datetime.strptime(x[0], '%m/%d/%Y')))
+
+"""
+Formated date in the history
+"""
+def formated_date(data):
+    new_data = {}
+    for date in data :
+        value = data[date]
+        #first regex for days
+        result = date.split('/')
+        date = "{:02d}/{:02d}/{:2d}".format(int(result[0]), int(result[1]), int(result[2]))
+        new_data[date+"20"] = value
+    
+    return new_data
+
+"""
+Get the country name by code
+"""
+def get_country_name(country_code):
+    data = get_new_data('confirmed')
+
+    for element in data['locations']:
+        if element['country_code'].lower() == country_code.lower() :
+            return element['country']
+
+    return None
