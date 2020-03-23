@@ -6,6 +6,6 @@ pipenv==2018.11.26
 pyparsing==2.4.6
 python-dateutil==2.8.1
 pytz==2019.3
-PyYAML==3.13
+PyYAML==5.1
 requests==2.22.0
 virtualenv==20.0.9
