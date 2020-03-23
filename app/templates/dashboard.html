@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Coronavirus - map</title>
+        <script src="https://d3js.org/d3.v5.min.js"></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.0.1/spin.min.js'></script> 
+        <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="stylesheet" type="text/css" href="/static/css/chart.css">
+        <script type="text/javascript">
+            var countryCode = '{{ country_code }}'
+        </script>
+    </head>
+
+    <body>
+        {% include 'header.html' %}
+        <div class='center'>
+            <div class="chartContainer">
+                <div id="country_confirmed" class="chart div-border">
+                    <div class="chart-title">
+                        <h3>Confimed in {{ country_name }}</h3>
+                    </div>
+                    <div id='chart_confirmed'></div>
+                </div>
+
+                <div id="country_deaths" class="chart div-border">
+                    <div class="chart-title">
+                        <h3>Deaths in {{ country_name }}</h3>
+                    </div>
+                    <div id='chart_deaths'></div>
+                </div>
+            
+                <div id="country_recovered" class="chart div-border">
+                    <div class="chart-title">
+                        <h3>Recovered in {{ country_name }}</h3>
+                    </div>
+                    <div id='chart_recovered'></div>
+                </div>
+            </div>
+        </div>
+        {% include 'footer.html' %}
+    </body>
+</html>
+<script type="text/javascript" src='/static/js/charts.js'></script>
