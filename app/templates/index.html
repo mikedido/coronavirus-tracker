@@ -4,78 +4,95 @@
     <head>
         <title>Coronavirus - map</title>
         <script src="https://d3js.org/d3.v5.min.js"></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.0.1/spin.min.js'></script> 
         <link rel="stylesheet" type="text/css" href="/static/css/map.css">
         <link rel="stylesheet" type="text/css" href="/static/css/style.css">
     </head>
 
     <body>
-        <div id="header">
-            <p>
-                Coronavirus COVID-19 Global Cases
-            </p>
-        </div>
+        {% include 'header.html' %}
         <div id="main">
             <div id='confirmed'>
                 <div id="title" class="div-border div-title">
                     <h3>Total confirmed</h3>
-                    <span class="number">{{ confirmed['total'] }}</span>
+                    <span class="number red">{{ confirmed['total'] }}</span>
                 </div>
-                <div id="list" class="div-border text-center">
-                    <p>Confirmed Cases by Country/Region/Sovereignty</p>
-                    {% for country in confirmed['data'] %}
-                        <div>
-                            <tr>
-                                <td>{{ country['country'] }}</td>
-                                <td>{{ country['total'] }}</td>
-                            </tr>
-                        </div>
-                    {% endfor %}
+                <div class="div-list div-border text-center">
+                    <div>
+                        <p>Confirmed Cases by Country/Region/Sovereignty</p>
+                    </div>
+                    <div id="list">
+                        {% for country in confirmed['data'] %}
+                            {% if country['total'] > 0 %}
+                            <div class='feature-list cursor-pointer'>
+                                <h5>
+                                    <a href="/{{ country['country_code'] }}">
+                                        <span class='red'>{{ country['total'] }}</span>
+                                        <span>{{ country['country'] }}</span>
+                                    </a>
+                                </h5>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
             <div id="container" class="container">
+                <div id='loader'></div>
                 <div id="map"></div>
             </div>
             <div id="death">
                 <div id="title" class="div-border div-title">
                     <h3>Total deaths</h3>
-                    <span class="number">{{ death['total'] }}</span>
+                    <span class="number red">{{ death['total'] }}</span>
                 </div>
-                <div id="list" class="div-border text-center">
-                    <p>Deaths Cases by Country/Region/Sovereignty</p>
-                    {% for country in death['data'] %}
-                        <div>
-                            <tr>
-                                <td>{{ country['country'] }}</td>
-                                <td>{{ country['total'] }}</td>
-                            </tr>
-                        </div>
-                    {% endfor %}
+                <div class="div-list div-border text-center">
+                    <div>
+                        <p>Confirmed Cases by Country/Region/Sovereignty</p>
+                    </div>
+                    <div id="list">
+                        {% for country in death['data'] %}
+                            {% if country['total'] > 0 %}
+                            <div class='feature-list cursor-pointer'>
+                                <h5>
+                                    <a href="/{{ country['country_code'] }}">
+                                        <span class="red">{{ country['total'] }}</span>
+                                        <span>{{ country['country'] }}</span>
+                                    </a>
+                                </h5>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
             <div id="recovered">
                 <div id="title" class="div-border div-title">
                     <h3>Total recovered</h3>
-                    <span class="number">{{ recovered['total'] }}</span>
+                    <span class="number green">{{ recovered['total'] }}</span>
                 </div>
-                <div id="list" class="div-border text-center">
-                    <p>Recovered Cases by Country/Region/Sovereignty</p>
-                    <div id="list" class="div-border text-center">
-                        <p>Deaths Cases by Country/Region/Sovereignty</p>
+                <div class="div-list div-border text-center">
+                    <div>
+                        <p>Confirmed Cases by Country/Region/Sovereignty</p>
+                    </div>
+                    <div id="list">
                         {% for country in recovered['data'] %}
-                            <div>
-                                <tr>
-                                    <td>{{ country['country'] }}</td>
-                                    <td>{{ country['total'] }}</td>
-                                </tr>
+                            {% if country['total'] > 0 %}
+                            <div class='feature-list cursor-pointer'>
+                                <h5>
+                                    <a href="/{{ country['country_code'] }}">
+                                        <span class="green">{{ country['total'] }}</span>
+                                        <span>{{ country['country'] }}</span>
+                                    </a>
+                                </h5>
                             </div>
+                            {% endif %}
                         {% endfor %}
                     </div>
                 </div>
             </div>
         </div>
-        <div id="footer">
-            <p>@Copyright 2020 developped by <a href=" ">Mahdi GUEFFAZ</a></p>
-        </div>
+        {% include 'footer.html' %}
     </body>
 </html>
-<script type="text/javascript" src='/static/js/confirmed.js'></script>
+<script type="text/javascript" src='/static/js/global.js'></script>
