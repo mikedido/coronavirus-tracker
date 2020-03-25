@@ -1,7 +1,7 @@
 import requests
 import csv
 from datetime import datetime
-#from cachetools import cached, TTLCache
+from cachetools import cached, TTLCache
 from app.utils import countrycodes, date as date_util
 import re
 
@@ -10,7 +10,7 @@ Base URL for fetching data.
 """
 base_url = 'https://raw.githubusercontent.com/CSSEGISandData/2019-nCoV/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-%s.csv';
 
-#@cached(cache=TTLCache(maxsize=1024, ttl=3600))
+@cached(cache=TTLCache(maxsize=1024, ttl=3600))
 def get_data(category):
     """
     Retrieves the data for the provided type. The data is cached for 1 hour.
@@ -78,6 +78,9 @@ def get_data(category):
         'source': 'https://github.com/ExpDev07/coronavirus-tracker-api',
     }
 
+"""
+Sorted data by date desc
+"""
 def get_sorted_data(data):
     data_tuple = data['locations']
     data_tuple = sorted(data_tuple, key=lambda k: k.get('total', 0), reverse=True)
@@ -86,11 +89,11 @@ def get_sorted_data(data):
         'total': data['total']
     }
 
+@cached(cache=TTLCache(maxsize=1024, ttl=3600))
 def get_new_data(category):
     """
     Retrieves the data for the provided type. The data is cached for 1 hour.
     """
-    
     # Adhere to category naming standard.
     category = category.lower().capitalize();
 
@@ -141,6 +144,7 @@ def get_new_data(category):
         'last_updated': datetime.utcnow().isoformat() + 'Z'
     }
 
+@cached(cache=TTLCache(maxsize=1024, ttl=3600))
 def get_all_data():
     """
     Retrieves the data for the provided type. The data is cached for 1 hour.

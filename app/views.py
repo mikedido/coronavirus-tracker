@@ -111,7 +111,7 @@ def api_all():
     })
 
 """
-The principal route
+The principal route of the website
 """
 @app.route('/')
 def index():
