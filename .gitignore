@@ -1,2 +1,3 @@
-app/data/__pycache__/__init__.cpython-37.pyc
-app/__pycache__/views.cpython-37.pyc
+app/data/__pycache__/
+app/__pycache__/
+app/routes/__pycache__/
