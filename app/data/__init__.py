@@ -2,8 +2,8 @@ import requests
 import csv
 from datetime import datetime
 from cachetools import cached, TTLCache
+import dateutil.parser
 from app.utils import countrycodes, date as date_util
-import re
 
 """
 Base URL for fetching data.
@@ -15,20 +15,15 @@ def get_data(category):
     """
     Retrieves the data for the provided type. The data is cached for 1 hour.
     """
-    
     # Adhere to category naming standard.
     category = category.lower().capitalize();
-
     # Request the data
     request = requests.get(base_url % category)
     text    = request.text
-
     # Parse the CSV.
     data = list(csv.DictReader(text.splitlines()))
-
     # The normalized locations.
     locations = []
-
     #add country
     add_country = []
 
@@ -36,14 +31,11 @@ def get_data(category):
         # Filter out all the dates.
         history = dict(filter(lambda element: date_util.is_date(element[0]), item.items()))
         #sorted date history
-        history = sorted_history_date(history)
-
+        history = sorted_history_date(formated_date(history))
         # Country for this location.
         country = item['Country/Region']
-
         # Latest data insert value.
         latest = list(history.values())[-1];
-
         # Normalize the item and append to locations.
         if not country in add_country:
             add_country.append(country)
@@ -53,90 +45,14 @@ def get_data(category):
                 'country':  country,
                 'country_code': countrycodes.country_code(country),
                 'province': item['Province/State'],
-
-                # Coordinates.
-                'coordinates': {
-                    'lat':  item['Lat'],
-                    'long': item['Long'],
-                },
-
                 # History.
                 'history': history,
-
-                # Latest statistic.
-                'latest': int(latest or 0),
-            })
-
-    # Latest total.
-    latest = sum(map(lambda location: location['latest'], locations))
-
-    # Return the final data.
-    return {
-        'locations': locations,
-        'latest': latest,
-        'last_updated': datetime.utcnow().isoformat() + 'Z',
-        'source': 'https://github.com/ExpDev07/coronavirus-tracker-api',
-    }
-
-"""
-Sorted data by date desc
-"""
-def get_sorted_data(data):
-    data_tuple = data['locations']
-    data_tuple = sorted(data_tuple, key=lambda k: k.get('total', 0), reverse=True)
-    return {
-        'data': data_tuple,
-        'total': data['total']
-    }
-
-@cached(cache=TTLCache(maxsize=1024, ttl=3600))
-def get_new_data(category):
-    """
-    Retrieves the data for the provided type. The data is cached for 1 hour.
-    """
-    # Adhere to category naming standard.
-    category = category.lower().capitalize();
-
-    # Request the data
-    request = requests.get(base_url % category)
-    text    = request.text
-
-    # Parse the CSV.
-    data = list(csv.DictReader(text.splitlines()))
-
-    # The normalized locations.
-    locations = []
-
-    #add country
-    add_country = []
-
-    for item in data:
-        # Filter out all the dates.
-        history = dict(filter(lambda element: date_util.is_date(element[0]), item.items()))
-
-        # Country for this location.
-        country = item['Country/Region']
-
-        # Latest data insert value.
-        latest = list(history.values())[-1];
-
-        # Normalize the item and append to locations.
-        if not country in add_country:
-            add_country.append(country)
-
-            locations.append({
-                # General info.
-                'country':  country,
-                'country_code': countrycodes.country_code(country),
-                'province': item['Province/State'],
-
                 # Latest statistic.
                 'total': int(latest or 0),
             })
 
     # Latest total.
     total = sum(map(lambda location: location['total'], locations))
-
     # Return the final data.
     return {
         'locations': locations,
@@ -144,103 +60,90 @@ def get_new_data(category):
         'last_updated': datetime.utcnow().isoformat() + 'Z'
     }
 
-@cached(cache=TTLCache(maxsize=1024, ttl=3600))
+"""
+Get all the data for different categories (confirmed, death and recovered)
+"""
 def get_all_data():
-    """
-    Retrieves the data for the provided type. The data is cached for 1 hour.
-    """
-    #all category
-    categories = ['', '', '']
-    
-    # Adhere to category naming standard.
-    category = category.lower().capitalize();
+    # data
+    data = []
+    # Get all the categories.
+    confirmed = get_data('confirmed')
+    deaths    = get_data('deaths')
+    recovered = get_data('recovered')
 
-    # Request the data
-    request = requests.get(base_url % category)
-    text    = request.text
+    # Add confirmed
+    for element in confirmed['locations']:
+        data.append({
+            'country':  element['country'],
+            'country_code': element['country_code'],
+            'province': element['province'],
+            'total': {
+                'confirmed': element['total']
+            }
+        })
 
-    # Parse the CSV.
-    data = list(csv.DictReader(text.splitlines()))
+    # Add death
+    for country in data:
+        for element in deaths['locations']:
+            if element['country'] == country['country']:
+                country['total']['death'] = element['total']
 
-    # The normalized locations.
-    locations = []
+    # Add recovered
+    for country in data:
+        for element in recovered['locations']:
+            if element['country'] == country['country']:
+                country['total']['recovered'] = element['total']
 
-    #add country
-    add_country = []
-
-    for item in data:
-        # Filter out all the dates.
-        history = dict(filter(lambda element: date_util.is_date(element[0]), item.items()))
-
-        # Country for this location.
-        country = item['Country/Region']
-
-        # Latest data insert value.
-        latest = list(history.values())[-1];
-
-        # Normalize the item and append to locations.
-        if not country in add_country:
-            add_country.append(country)
-
-            locations.append({
-                # General info.
-                'country':  country,
-                'country_code': countrycodes.country_code(country),
-                'province': item['Province/State'],
-
-                # Coordinates.
-                'coordinates': {
-                    'lat':  item['Lat'],
-                    'long': item['Long'],
-                },
-
-                # History.
-                'history': history,
-
-                # Latest statistic.
-                'latest': int(latest or 0),
-            })
-
-    # Latest total.
-    latest = sum(map(lambda location: location['latest'], locations))
-
-    # Return the final data.
     return {
-        'locations': locations,
-        'latest': latest,
-        'last_updated': datetime.utcnow().isoformat() + 'Z',
-        'source': 'https://github.com/ExpDev07/coronavirus-tracker-api',
+        'data': data,
+        'last_updated': dateutil.parser.parse(confirmed["last_updated"]),
+        # Latest.
+        'latest': {
+            'confirmed': confirmed['total'],
+            'deaths':    deaths['total'],
+            'recovered': recovered['total'],
+        }
     }
 
 """
 Sorted data by date
 """
 def sorted_history_date(data):
-    data = formated_date(data)
+
     return dict(sorted(data.items(), key = lambda x:datetime.strptime(x[0], '%m/%d/%Y')))
 
 """
 Formated date in the history
 """
 def formated_date(data):
-    new_data = {}
+    data_formated = {}
+
     for date in data :
-        value = data[date]
-        #first regex for days
-        result = date.split('/')
-        date = "{:02d}/{:02d}/{:2d}".format(int(result[0]), int(result[1]), int(result[2]))
-        new_data[date+"20"] = value
+        splited_date = date.split('/')
+        date_formated = "{:02d}/{:02d}/{:2d}".format(int(splited_date[0]), int(splited_date[1]), int(splited_date[2]))
+        data_formated[date_formated+"20"] = data[date]
     
-    return new_data
+    return data_formated
 
 """
 Get the country name by code
 """
 def get_country_name(country_code):
-    data = get_new_data('confirmed')
+    data = get_data('confirmed')
 
     for element in data['locations']:
         if element['country_code'].lower() == country_code.lower() :
             return element['country']
 
     return None
+
+"""
+Sorted data by date desc
+"""
+def sorted_data(data, reversed):
+    data_tuple = data['locations']
+    data_tuple = sorted(data_tuple, key=lambda k: k.get('total', 0), reverse=reversed)
+    return {
+        'data': data_tuple,
+        'total': data['total']
+    }

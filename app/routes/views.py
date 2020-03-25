@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, url_for
 from app import app
-from app.data import get_data, get_new_data, get_sorted_data, get_country_name
+from app.data import get_data, sorted_data, get_country_name
 from flask import jsonify, json
 import dateutil.parser
 
@@ -11,9 +11,9 @@ The principal route of the website
 def index():
     return render_template(
         'index.html', 
-        confirmed=get_sorted_data(get_new_data('confirmed')),
-        death=get_sorted_data(get_new_data('deaths')),
-        recovered=get_sorted_data(get_new_data('recovered'))
+        confirmed=sorted_data(get_data('confirmed'), True),
+        death=sorted_data(get_data('deaths'), True),
+        recovered=sorted_data(get_data('recovered'), True)
     )
 
 """
