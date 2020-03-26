@@ -22,18 +22,25 @@
                         <p>Confirmed Cases by Country/Region/Sovereignty</p>
                     </div>
                     <div id="list">
-                        {% for country in confirmed['data'] %}
-                            {% if country['total'] > 0 %}
-                            <div class='feature-list cursor-pointer'>
-                                <h5>
-                                    <a href="/{{ country['country_code'] }}">
-                                        <span class='red'>{{ country['total'] }}</span>
-                                        <span>{{ country['country'] }}</span>
-                                    </a>
-                                </h5>
-                            </div>
-                            {% endif %}
-                        {% endfor %}
+                        {% if confirmed['data'] %}
+                            {% for country in confirmed['data'] %}
+                                {% if country['total'] > 0 %}
+                                <div class='feature-list cursor-pointer'>
+                                    <h5>
+                                        <a href="/{{ country['country_code'] }}/{{ country['province'] }}">
+                                            <span class='red'>{{ country['total'] }}</span>
+                                            <span>{{ country['country'] }}</span>
+                                            {% if country['province'] %}
+                                                <span class="font-normal">({{ country['province'] }})</span>
+                                            {% endif %}
+                                        </a>
+                                    </h5>
+                                </div>
+                                {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            DATA NOT AVAILABLE
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -51,18 +58,25 @@
                         <p>Confirmed Cases by Country/Region/Sovereignty</p>
                     </div>
                     <div id="list">
-                        {% for country in death['data'] %}
-                            {% if country['total'] > 0 %}
-                            <div class='feature-list cursor-pointer'>
-                                <h5>
-                                    <a href="/{{ country['country_code'] }}">
-                                        <span class="red">{{ country['total'] }}</span>
-                                        <span>{{ country['country'] }}</span>
-                                    </a>
-                                </h5>
-                            </div>
-                            {% endif %}
-                        {% endfor %}
+                        {% if death['data'] %}
+                            {% for country in death['data'] %}
+                                {% if country['total'] > 0 %}
+                                <div class='feature-list cursor-pointer'>
+                                    <h5>
+                                        <a href="/{{ country['country_code'] }}/{{ country['province'] }}">
+                                            <span class="red">{{ country['total'] }}</span>
+                                            <span>{{ country['country'] }}</span>
+                                            {% if country['province'] %}
+                                                <span class="font-normal">({{ country['province'] }})</span>
+                                            {% endif %}
+                                        </a>
+                                    </h5>
+                                </div>
+                                {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            DATA NOT AVAILABLE
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -76,18 +90,25 @@
                         <p>Confirmed Cases by Country/Region/Sovereignty</p>
                     </div>
                     <div id="list">
-                        {% for country in recovered['data'] %}
-                            {% if country['total'] > 0 %}
-                            <div class='feature-list cursor-pointer'>
-                                <h5>
-                                    <a href="/{{ country['country_code'] }}">
-                                        <span class="green">{{ country['total'] }}</span>
-                                        <span>{{ country['country'] }}</span>
-                                    </a>
-                                </h5>
-                            </div>
-                            {% endif %}
-                        {% endfor %}
+                        {% if recovered['data'] %}
+                            {% for country in recovered['data'] %}
+                                {% if country['total'] > 0 %}
+                                <div class='feature-list cursor-pointer'>
+                                    <h5>
+                                        <a href="/{{ country['country_code'] }}/{{ country['province'] }}">
+                                            <span class="green">{{ country['total'] }}</span>
+                                            <span>{{ country['country'] }}</span>
+                                            {% if country['province'] %}
+                                                <span class="font-normal">{{ country['province'] }}</span>
+                                            {% endif %}
+                                        </a>
+                                    </h5>
+                                </div>
+                                {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            DATA NOT AVAILABLE
+                        {% endif %}
                     </div>
                 </div>
             </div>
