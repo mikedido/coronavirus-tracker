@@ -9,24 +9,27 @@ from app.helpers import sorted_history_date, formated_date
 """
 Base URL for fetching data.
 """
-base_url = 'https://raw.githubusercontent.com/CSSEGISandData/2019-nCoV/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-%s.csv';
+base_url = "https://raw.githubusercontent.com/CSSEGISandData/2019-nCoV/master/csse_covid_19_data/csse_covid_19_time_series/"
 
 @cached(cache=TTLCache(maxsize=1024, ttl=3600))
 def get_data(category):
     """
     Retrieves the data for the provided type. The data is cached for 1 hour.
     """
-    # Adhere to category naming standard.
-    category = category.lower().capitalize();
-    # Request the data
-    request = requests.get(base_url % category)
+    category = category.lower()
+
+    # URL to request data from.
+    url = base_url + "time_series_covid19_%s_global.csv" % category
+
+    if category == "recovered":
+        url = base_url + "time_series_19-covid-Recovered.csv"
+
+    request = requests.get(url)
     text    = request.text
     # Parse the CSV.
     data = list(csv.DictReader(text.splitlines()))
     # The normalized locations.
     locations = []
-    #add country
-    add_country = []
 
     for item in data:
         # Filter out all the dates.
@@ -38,19 +41,16 @@ def get_data(category):
         # Latest data insert value.
         latest = list(history.values())[-1];
         # Normalize the item and append to locations.
-        if not country in add_country:
-            add_country.append(country)
-
-            locations.append({
-                # General info.
-                'country':  country,
-                'country_code': countrycodes.country_code(country),
-                'province': item['Province/State'],
-                # History.
-                'history': history,
-                # Latest statistic.
-                'total': int(latest or 0),
-            })
+        locations.append({
+            # General info.
+            'country':  country,
+            'country_code': countrycodes.country_code(country),
+            'province': item['Province/State'],
+            # History.
+            'history': history,
+            # Latest statistic.
+            'total': int(latest or 0),
+        })
 
     # Latest total.
     total = sum(map(lambda location: location['total'], locations))
