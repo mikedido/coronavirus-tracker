@@ -20,12 +20,13 @@ def index():
 """
 The dashboard charts (deaths, confirmed, recovered) by country
 """
-@app.route('/<country_code>')
-def country_stats(country_code):
+@app.route('/<country_code>/', defaults={'province_name' : ''})
+@app.route('/<country_code>/<province_name>')
+def country_stats(country_code, province_name):
     #Get the country name
     country_name = get_country_name(country_code)
     if country_name != None:
-        return render_template('dashboard.html', country_code=country_code,country_name=country_name)
+        return render_template('dashboard.html', country_code=country_code,country_name=country_name, province_name=province_name)
 
     return redirect(url_for('index'))
 
