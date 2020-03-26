@@ -15,9 +15,6 @@ var opts = {
   className: 'spinner', // The CSS class to assign to the spinner
 };
 
-
-
-
 /**
  * New function to draw chart
  * 
@@ -26,7 +23,6 @@ var opts = {
  * @param {*} chartName 
  */
 function createChart(url, divName, chartName, chartColor) {
-
     var target = document.getElementById(chartName);
     // trigger loader
     var spinner = new Spinner(opts).spin(target);
@@ -61,7 +57,6 @@ function createChart(url, divName, chartName, chartColor) {
     // On déclare également une map qui servira un peu plus bas pour l'affichage du tooltip
     var map = {};
     d3.json(url).then(function(data) {
-        
         last_updated = data['last_updated'];
         data = data['data'];
         spinner.stop();
@@ -188,6 +183,6 @@ function createChart(url, divName, chartName, chartColor) {
 }
 
 
-createChart('api/confirmed/'+countryCode, 'country_confirmed', 'chart_confirmed', "redLine");
-createChart('api/deaths/'+countryCode, 'country_deaths', 'chart_deaths', 'redLine');
-createChart('api/recovered/'+countryCode, 'country_recovered', 'chart_recovered', 'greenLine');
+createChart('/api/confirmed/'+countryCode+'/'+provinceName, 'country_confirmed', 'chart_confirmed', "redLine");
+createChart('/api/deaths/'+countryCode+'/'+provinceName, 'country_deaths', 'chart_deaths', 'redLine');
+createChart('/api/recovered/'+countryCode+'/'+provinceName, 'country_recovered', 'chart_recovered', 'greenLine');
