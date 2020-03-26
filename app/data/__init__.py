@@ -1,9 +1,10 @@
 import requests
 import csv
+import dateutil.parser
 from datetime import datetime
 from cachetools import cached, TTLCache
-import dateutil.parser
 from app.utils import countrycodes, date as date_util
+from app.helpers import sorted_history_date, formated_date
 
 """
 Base URL for fetching data.
@@ -106,26 +107,6 @@ def get_all_data():
     }
 
 """
-Sorted data by date
-"""
-def sorted_history_date(data):
-
-    return dict(sorted(data.items(), key = lambda x:datetime.strptime(x[0], '%m/%d/%Y')))
-
-"""
-Formated date in the history
-"""
-def formated_date(data):
-    data_formated = {}
-
-    for date in data :
-        splited_date = date.split('/')
-        date_formated = "{:02d}/{:02d}/{:2d}".format(int(splited_date[0]), int(splited_date[1]), int(splited_date[2]))
-        data_formated[date_formated+"20"] = data[date]
-    
-    return data_formated
-
-"""
 Get the country name by code
 """
 def get_country_name(country_code):
@@ -136,14 +117,3 @@ def get_country_name(country_code):
             return element['country']
 
     return None
-
-"""
-Sorted data by date desc
-"""
-def sorted_data(data, reversed):
-    data_tuple = data['locations']
-    data_tuple = sorted(data_tuple, key=lambda k: k.get('total', 0), reverse=reversed)
-    return {
-        'data': data_tuple,
-        'total': data['total']
-    }
