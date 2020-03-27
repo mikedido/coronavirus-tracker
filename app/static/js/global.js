@@ -252,7 +252,11 @@ Promise.all(promises).then(function(values) {
                     //var mouse = d3.mouse(this);
                     tooltip.attr('transform', 'translate("100", "100")');
                     //tooltip.attr("transform", "translate(" + mouse[0] + "," + (mouse[1] - 75) + ")");
-                });
+                })
+                .on("click", function(d) {
+                    var url = "/"+element.country_code;
+                    window.location = url;
+                  });
         });
     });
 
