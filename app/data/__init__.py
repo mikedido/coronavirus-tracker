@@ -21,9 +21,6 @@ def get_data(category):
     # URL to request data from.
     url = base_url + "time_series_covid19_%s_global.csv" % category
 
-    if category == "recovered":
-        url = base_url + "time_series_19-covid-Recovered.csv"
-
     request = requests.get(url)
     text    = request.text
     # Parse the CSV.
