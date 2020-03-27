@@ -122,6 +122,7 @@ is_3166_1 = {
     "Kiribati"                                     : "KI",
     "Korea, Democratic People's Republic of"       : "KP",
     "Korea, Republic of"                           : "KR",
+    "Kosovo"                                       : "XR",
     "Kuwait"                                       : "KW",
     "Kyrgyzstan"                                   : "KG",
     "Lao People's Democratic Republic"             : "LA",
@@ -219,7 +220,7 @@ is_3166_1 = {
     "Swaziland"                                    : "SZ",
     "Sweden"                                       : "SE",
     "Switzerland"                                  : "CH",
-    "Syrian Arab Republic"                         : "SY",
+    "Syria"                                        : "SY",
     "Taiwan, Province of China"                    : "TW",
     "Tajikistan"                                   : "TJ",
     "Tanzania, United Republic of"                 : "TZ",
@@ -243,7 +244,7 @@ is_3166_1 = {
     "Uruguay"                                      : "UY",
     "Uzbekistan"                                   : "UZ",
     "Vanuatu"                                      : "VU",
-    "Venezuela, Bolivarian Republic of"            : "VE",
+    "Venezuela"                                    : "VE",
     "Viet Nam"                                     : "VN",
     "Virgin Islands, British"                      : "VG",
     "Virgin Islands, U.S."                         : "VI",
@@ -257,9 +258,16 @@ is_3166_1 = {
 # Mapping of alternative names, spelling, typos to the names of countries used
 # by the ISO 3166-1 norm
 synonyms = {
+    "Bolivia"          : "Bolivia, Plurinational State of",
+    "Congo (Brazzaville)" : "Congo",
+    "Congo (Kinshasa)" : "Congo, the Democratic Republic of the",
+    "Laos"             : "Lao People's Democratic Republic",
     "Mainland China"   : "China",
+    "Moldova"          : "Moldova, Republic of",
     "Czechia"          : "Czech Republic",
     "South Korea"      : "Korea, Republic of",
+    "Tanzania"         : "Tanzania, United Republic of",
+    "Korea, South"     : "Korea, Republic of",
     "Taiwan"           : "Taiwan, Province of China",
     "US"               : "United States",
     # TODO Macau is probably a typo. Report it to CSSEGISandData/COVID-19
