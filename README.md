@@ -35,11 +35,17 @@ Charts of evolution of deaths, confirmed and recovered by country.
 
 ## How to Use
 #### Build from source code
+```
 1. Clone/Download the repo.
-2. Install the requiremenet : `pip install -r `requirements.txt`
-2. Execute & run! : `python3 run.py`
+2. Install the requiremenet : `make install`
+2. Execute & run! : `make run`
 3. Visit your browser : http://localhost:5000
 4. Enjoy ;)
+```
+#### Runing tests
+```
+make test
+```
 
 ## TODO
 
@@ -47,6 +53,7 @@ Charts of evolution of deaths, confirmed and recovered by country.
 * __Cities__ add détails of the cities
 * __Chart__ add map by country and their détails by city
 * __Share__ stats & charts as images.
+* __Active__ Add the active person by country
 
  ## Data
 
