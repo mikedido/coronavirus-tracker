@@ -1,6 +1,6 @@
 app/__pycache__/
-app/data/__pycache__/
 app/routes/__pycache__/
 app/helpers/__pycache__/
 app/utils/__pycache__/
 app/tests/__pycache__/
+app/services/__pycache__/
