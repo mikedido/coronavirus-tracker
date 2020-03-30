@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, url_for
 from app import app
-from app.data import get_data, get_country_name
+from app.services import get_data, get_country_name
 from app.helpers import sorted_data
 from flask import jsonify, json
 import dateutil.parser

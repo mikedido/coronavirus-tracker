@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, url_for
 #from app.helpers import sorted_data
-from app.data import get_data, get_country_name, get_all_data
+from app.services import get_data, get_country_name, get_all_data, regrouped_by_country
 from flask import jsonify, json
 import dateutil.parser
 from app import app
@@ -103,5 +103,13 @@ Get all the detah, confirmed, recovered
 """
 @app.route('/api/all')
 def api_all():
-    
+
     return jsonify(get_all_data())
+
+"""
+Get all the detah, confirmed, recovered
+"""
+@app.route('/api/all/regrouped')
+def api_all_regrouped_by_country():
+
+    return jsonify(regrouped_by_country(get_all_data()))

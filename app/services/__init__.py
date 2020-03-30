@@ -114,3 +114,41 @@ def get_country_name(country_code):
             return element['country']
 
     return None
+
+"""
+Regroup the data by country
+"""
+def regrouped_by_country(data):
+    regrouped_data_by_country = []
+
+    for country in data['data'] :
+        if any(element['country'] == country['country'] for element in regrouped_data_by_country):
+            #add the province to the country
+            regrouped_data_by_country = update_data(regrouped_data_by_country, country)
+        else :
+            regrouped_data_by_country.append(country)
+
+    return {
+        'data': regrouped_data_by_country,
+        'last_updated': data["last_updated"],
+        # Latest.
+        'latest': {
+            'confirmed': data['latest']['confirmed'],
+            'deaths':    data['latest']['deaths'],
+            'recovered': data['latest']['recovered'],
+        }
+    }
+
+"""
+Update the number of death, confirmed and recovered of the country
+"""
+def update_data(data, province):
+    for element in data:
+        if element['country'] == province['country']:
+
+            element['total']['confirmed'] += province['total']['confirmed']
+            element['total']['death'] += province['total']['death']
+            if 'recovered' in element['total'].keys():
+                element['total']['recovered'] += province['total']['recovered']
+            
+            return data
