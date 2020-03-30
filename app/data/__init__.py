@@ -83,13 +83,13 @@ def get_all_data():
     # Add death
     for country in data:
         for element in deaths['locations']:
-            if element['country'] == country['country']:
+            if element['country'] == country['country'] and element['province'] == country['province'] :
                 country['total']['death'] = element['total']
 
     # Add recovered
     for country in data:
         for element in recovered['locations']:
-            if element['country'] == country['country']:
+            if element['country'] == country['country'] and element['province'] == country['province'] :
                 country['total']['recovered'] = element['total']
 
     return {
