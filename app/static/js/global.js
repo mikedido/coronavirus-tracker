@@ -54,7 +54,7 @@ function addTooltip() {
         .style("display", "none");
     
     tooltip.append("polyline") // The rectangle containing the text, it is 210px width and 60 height
-        .attr("points","0,0 210,0 210,100 0,100 0,0")
+        .attr("points","0,0 210,0 210,130 0,130 0,0")
         .style("fill", "#222")
         .style("stroke","black")
         .style("opacity","0.9")
@@ -84,39 +84,47 @@ function addTooltip() {
         .style("font-size", "16px");
     
     text.append("tspan") // Fixed text
-        .attr("x", 105) // ie, tooltip width / 2
+        .attr("x", 20) // ie, tooltip width / 2
         .attr("y", 30)
-        .attr("text-anchor", "middle")
         .style("fill", "white")
         .text("Confirmed : ");
     
     text.append("tspan") // Score udpated by its id
-        .attr("id", "tooltip-score")
-        .style("fill","white")
+        .attr("id", "tooltip-confirmed")
+        .style("fill","red")
         .style("font-weight", "bold");
 
     text.append("tspan") // Fixed text
-        .attr("x", 105) // ie, tooltip width / 2
+        .attr("x", 20) // ie, tooltip width / 2
         .attr("y", 50)
-        .attr("text-anchor", "middle")
         .style("fill", "white")
-        .text(" Deaths : ");
+        .text("Deaths : ");
     
     text.append("tspan") // Deaths udpated by its id
         .attr("id", "tooltip-deaths")
-        .style("fill","white")
+        .style("fill","red")
         .style("font-weight", "bold");
 
     text.append("tspan") // Fixed text
-        .attr("x", 105) // ie, tooltip width / 2
+        .attr("x", 20) // ie, tooltip width / 2
         .attr("y", 70)
-        .attr("text-anchor", "middle")
         .style("fill", "white")
-        .text("recovered : ");
+        .text("Recovered : ");
     
-    text.append("tspan") // Deaths udpated by its id
+    text.append("tspan") // Recovered udpated by its id
         .attr("id", "tooltip-recovered")
-        .style("fill","white")
+        .style("fill","green")
+        .style("font-weight", "bold");
+
+    text.append("tspan") // Fixed text
+        .attr("x", 20) // ie, tooltip width / 2
+        .attr("y", 90)
+        .style("fill", "white")
+        .text("Active : ");
+    
+    text.append("tspan") // Recovered udpated by its id
+        .attr("id", "tooltip-active")
+        .style("fill","orange")
         .style("font-weight", "bold");
     
     return tooltip;
@@ -233,12 +241,14 @@ Promise.all(promises).then(function(values) {
                     tooltip.style("display", null);
                     tooltip.select('#tooltip-country')
                         .text(element.country);
-                    tooltip.select('#tooltip-score')
+                    tooltip.select('#tooltip-confirmed')
                         .text(element.total.confirmed);
                     tooltip.select('#tooltip-deaths')
                         .text(element.total.death);
                     tooltip.select('#tooltip-recovered')
                         .text(element.total.recovered);
+                    tooltip.select('#tooltip-active')
+                        .text(element.total.confirmed - element.total.recovered);
                     legend.select("#cursor")
                         .attr('transform', 'translate(' + (legendCellSize + 5) + ', ' + (getColorIndex(quantile(+element.latest)) * legendCellSize) + ')')
                         .style("display", null);
