@@ -7,5 +7,8 @@ test:
 install:
 	pip install -r requirements.txt
 
+lint:
+	flake8 app
+
 run:
 	$(PYTHON) run.py
