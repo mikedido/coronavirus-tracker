@@ -8,7 +8,7 @@ install:
 	pip install -r requirements.txt
 
 lint:
-	flake8 app
+	flake8 app --ignore=E501,E703,F401,E402
 
 run:
 	$(PYTHON) run.py

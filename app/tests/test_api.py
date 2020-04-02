@@ -1,6 +1,6 @@
-import os
 import unittest
 from app import app
+
 
 class TestApiRoutes(unittest.TestCase):
     def test_api_recovered(self):
@@ -16,12 +16,12 @@ class TestApiRoutes(unittest.TestCase):
         assert response.status_code == 200
 
     def test_api_all(self):
-        self.assertEqual(2, 2) 
+        self.assertEqual(2, 2)
         response = self.app.get('/api/all')
         assert response.status_code == 200
-    
+
     def setUp(self):
         self.app = app.test_client()
-    
+
     def tearDown(slef):
         pass

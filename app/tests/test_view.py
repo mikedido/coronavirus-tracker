@@ -1,6 +1,6 @@
-import os
 import unittest
 from app import app
+
 
 class TestViewsRoutes(unittest.TestCase):
     def test_index(self):
@@ -13,6 +13,6 @@ class TestViewsRoutes(unittest.TestCase):
 
     def setUp(self):
         self.app = app.test_client()
-    
+
     def tearDown(slef):
         pass
