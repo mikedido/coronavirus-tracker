@@ -9,9 +9,11 @@
 
 ## About
 
-An app to analysis data about the corona virus / COVID-19 on the world of the number of deaths, confirmed and recovered person. 
+An app to analysis data about the corona virus / COVID-19 on the world by giving the number of deaths, confirmed and recovered person. 
 
-Charts of evolution of deaths, confirmed and recovered by country.
+Also a charts available to evaluate the number of deaths, confirmed and recovered by country.
+
+The app is avalable on the following address : https://corona-stats-world.herokuapp.com/
 
 ## Screenshot
 
@@ -23,8 +25,8 @@ Charts of evolution of deaths, confirmed and recovered by country.
 ## Features
 * __Live data__: Shows the most recent data, and updates automatically.
 * __Distribution map__ with two levels of details:
-  * __Countries__: When the user mouse over country on the map. Fewer details show the number of deaths, confoirmed and recovered are shown.
-  * __List__ : list of the coutnries regrouped by deaths, confirmed and recovered+.
+  * __Countries__: When the user mouse over country on the map. Fewer details show the number of deaths, confirmed, recovered and active are shown.
+  * __List__ : list of the countries regrouped by deaths, confirmed and recovered+.
 * __Charts__:
    * __Current state chart__ for all countries (and cities).
    * __Timeline chart__ for all countries (and cities).
