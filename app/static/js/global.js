@@ -1,6 +1,6 @@
 //initialisation
-const width = document.getElementById("container").offsetWidth * 1.0,
-height = 500,
+const width = document.getElementById("map-container").offsetWidth * 1.0,
+height = document.getElementById("map-container").offsetHeight,
 legendCellSize = 30,
 colors = ['#ff9999', '#ff4d4d', '#ff0000', '#e60000', '#b30000', '#660000'];
 
