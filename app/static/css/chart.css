@@ -1,3 +1,50 @@
+.container {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-template-areas: "header header"
+    "confirmed-chart death-chart"
+    "recovered-chart chart"
+    "footer footer";
+    grid-template-columns: 2fr 2fr;
+    grid-template-rows: 0.1fr 4fr 4fr 0.1fr;
+}
+
+.container > div {
+    /*border: 1px dashed #888;*/
+}
+
+.header {
+    grid-area: header;
+}
+
+.confirmed-chart {
+    grid-area: confirmed-chart;
+}
+
+.death-chart {
+    grid-area: death-chart;
+}
+
+.recovered-chart {
+    grid-area: recovered-chart;
+}
+
+.chart {
+    grid-area: chart;
+}
+
+.footer {
+    grid-area: footer;
+}
+
+.chart-title {
+    padding: 10px 0 0 0;
+    text-align: center;
+    color: white;
+}
+
+
 .domain{
     color: white;
 }
@@ -74,43 +121,19 @@
 }
 
 #country_confirmed {
-    float: left;
-    width: 47%;
-    height: 400px;
+   
     margin: 10px 10px 10px 10px;
     background-color: #212121;
 }
 
 #country_deaths {
-    float: left;
-    width: 47%;
-    height: 400px;
+   
     margin: 10px 10px 10px 10px;
     background-color: #212121;
 }
 
 #country_recovered {
-    float: left;
-    width: 47%;
-    height: 400px;
+   
     margin: 10px 10px 10px 10px;
     background-color: #212121;
-}
-
-.chart-title {
-    padding: 10px 0 0 0;
-    text-align: center;
-    color: white;
-}
-
-#chart_confirmed {
-    position: relative;
-}
-
-#chart_deaths {
-    position: relative;
-}
-
-#chart_recovered {
-    position: relative;
 }

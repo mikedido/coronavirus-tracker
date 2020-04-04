@@ -1,8 +1,3 @@
-// config references
-var chartConfig = {
-    target : 'chart_confirmed'
-};
-
 // loader settings
 var opts = {
   lines: 9, // The number of lines to draw
@@ -13,6 +8,7 @@ var opts = {
   speed: 1.5, // Rounds per second
   trail: 40, // Afterglow percentage
   className: 'spinner', // The CSS class to assign to the spinner
+  position: 'relative'
 };
 
 /**
@@ -23,7 +19,7 @@ var opts = {
  * @param {*} chartName 
  */
 function createChart(url, divName, chartName, chartColor) {
-    var target = document.getElementById(chartName);
+    var target = document.getElementById(divName);
     // trigger loader
     var spinner = new Spinner(opts).spin(target);
 

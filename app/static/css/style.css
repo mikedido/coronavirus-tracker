@@ -1,8 +1,3 @@
-body {
-    background-color: black;
-    font-family: "Avenir Next W01","Avenir Next W00","Avenir Next",Avenir,"Helvetica Neue",sans-serif;
-}
-
 .container {
     display: grid;
     width: 100%;
@@ -13,96 +8,42 @@ body {
     "footer footer footer footer";
     grid-template-columns: 1fr 4fr 1fr 1fr;
     grid-template-rows: 0.1fr 0.3fr 1fr 0.1fr;
-  }
-  .container > div {
+}
+
+.container > div {
     /*border: 1px dashed #888;*/
-  }
+}
   
-  .header {
+.header {
     grid-area: header;
-  }
-  .total-confirmed {
+}
+
+.total-confirmed {
     grid-area: total-confirmed;
-  }
-  .map {
+}
+
+.map {
     grid-area: map;
-  }
-  .total-death {
+}
+
+.total-death {
     grid-area: total-death;
-  }
-  .total-recovered {
+}
+
+.total-recovered {
     grid-area: total-recovered;
-  }
-  .list-confirmed {
+}
+
+.list-confirmed {
     grid-area: list-confirmed;
-  }
-  .list-death {
+}
+
+.list-death {
     grid-area: list-death;
 }
 
-  .list-recovered {
+.list-recovered {
     grid-area: list-recovered;
-}
-
-.footer {
-    grid-area: footer;
-}
-
-.header-title{
-    margin: 10px 5px 5px 5px;
-    text-align: center;
-    background-color: #212121;
-    padding: 1px 0;
-    color: white;
-    border: 1px solid #363636;
-}
-
-.header-title p {
-    font-size: 1.6994866rem;
-    margin: 5px 0 0 0;
-}
-
-.footer-title {
-    margin: 10px 5px 5px 5px;
-    text-align: center;
-    clear: both;
-    background-color: #212121;
-    color: white;
-    border: 1px solid #363636;
-}
-
-.footer-title p {
-    margin: 5px 0 0 0;
-}
-
-.footer-title a {
-    color: white;
-    text-decoration: none;
-    font-size: 14px;
-}
-
-.footer-title .version {
-    font-size: 12px;
-}
-
-.block-decoration {
-    background-color: #212121;
-    margin: 5px 5px 5px 5px;
-}
-
-.div-title {
-    padding: 10px 0 0 0;
-    text-align: center;
-}
-
-.div-border {
-    border-left: solid 0.5px red;
-    border-right: solid 0.5px red;
-}
-
-.text-decoration {
-    text-align: center;
-    color: white;
 }
 
 .text-smal-size {
@@ -116,63 +57,3 @@ body {
 .cursor-pointer {
     cursor: pointer;
 }
-
-#list {
-    overflow: scroll;
-    overflow-x: hidden;
-    margin: 0px 0px 0px 0px;
-    height: 50vh;
-}
-
-#list h5 {
-    font-size: 1.00rem;
-    margin: 0;
-    text-align: left;
-    margin-left: 10px;
-}
-
-#list h5 a {
-    color: white;
-    text-decoration: none;
-}
-
-.font-normal {
-    font-weight: normal;
-}
-
-.green {
-    color: rgb(112, 168, 0);
-}
-
-.red {
-    color: rgb(230, 0, 0)
-}
-
-/* width */
-::-webkit-scrollbar {
-    width: 7px;
-  }
-  
-  /* Track */
-  ::-webkit-scrollbar-track {
-    background: grey; 
-  }
-   
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background: #bdbdbd; 
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background: #555; 
-  }
-
-  #map-container {
-      background: #1a1c20;
-  }
-
-  .number {
-      font-size: 2.5vw;
-      font-weight: bold;
-  }
