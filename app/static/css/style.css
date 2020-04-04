@@ -3,82 +3,91 @@ body {
     font-family: "Avenir Next W01","Avenir Next W00","Avenir Next",Avenir,"Helvetica Neue",sans-serif;
 }
 
-.text-title {
-    font-size: 1.6994866rem;
-    line-height: 1.3875;
+.container {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-template-areas: "header header header header"
+    "total-confirmed map total-death total-recovered"
+    "list-confirmed map list-death list-recovered"
+    "footer footer footer footer";
+    grid-template-columns: 1fr 4fr 1fr 1fr;
+    grid-template-rows: 0.1fr 0.3fr 1fr 0.1fr;
+  }
+  .container > div {
+    /*border: 1px dashed #888;*/
+  }
+  
+  .header {
+    grid-area: header;
+  }
+  .total-confirmed {
+    grid-area: total-confirmed;
+  }
+  .map {
+    grid-area: map;
+  }
+  .total-death {
+    grid-area: total-death;
+  }
+  .total-recovered {
+    grid-area: total-recovered;
+  }
+  .list-confirmed {
+    grid-area: list-confirmed;
+  }
+  .list-death {
+    grid-area: list-death;
 }
 
-#header, #confirmed, #footer, #recovered, #death{
-    padding:1px 0;
+  .list-recovered {
+    grid-area: list-recovered;
+}
+
+.footer {
+    grid-area: footer;
+}
+
+.header-title{
+    margin: 10px 5px 5px 5px;
+    text-align: center;
+    background-color: #212121;
+    padding: 1px 0;
     color: white;
     border: 1px solid #363636;
 }
 
-#header {
+.header-title p {
+    font-size: 1.6994866rem;
+    margin: 5px 0 0 0;
+}
+
+.footer-title {
     margin: 10px 5px 5px 5px;
-    text-align:center;
+    text-align: center;
+    clear: both;
     background-color: #212121;
+    color: white;
+    border: 1px solid #363636;
 }
 
-#main {
-    max-with:960px;
-    margin:auto;
-    margin: 0 5px 0 5px;
+.footer-title p {
+    margin: 5px 0 0 0;
 }
 
-#confirmed  {
-    float:left;
-    width: 15%;
-    margin: 10px 5px 10px 5px;
-    height: 500px;
+.footer-title a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
 }
 
-#container {
-    float: left;
-    margin: 10px 5px 10px 5px;
-    width:50%;
+.footer-title .version {
+    font-size: 12px;
 }
 
-#death {
-    float: left;
-    width: 15%;
-    margin: 10px 5px 10px 10px;
-    height: 500px;
-}
-
-#recovered {
-    float: left;
-    width: 15%;
-    margin: 10px 5px 10px 5px;
-    height: 500px;
-}
-
-#footer {
-    margin: 10px 5px 5px 5px;
-    text-align:center;
-    clear:both;
+.block-decoration {
     background-color: #212121;
-}
-
-#title {
-    margin: 0px 0px 8px 0px;
-    background-color: #212121;
-}
-
-#list {
-    overflow: scroll;
-    overflow-x: hidden;
-    margin: 0px 0px 8px 0px;
-    height: 300px;
-}
-
-.div-list{
-    background-color: #212121;
-}
-
-.div-border {
-    border-left: solid 0.5px red;
-    border-right: solid 0.5px red;
+    margin: 5px 5px 5px 5px;
 }
 
 .div-title {
@@ -86,15 +95,49 @@ body {
     text-align: center;
 }
 
-.number {
-    font-size: 50px;
-    font-weight: bold;
-
+.div-border {
+    border-left: solid 0.5px red;
+    border-right: solid 0.5px red;
 }
 
-.text-center {
+.text-decoration {
     text-align: center;
+    color: white;
+}
+
+.text-smal-size {
     font-size: 12px;
+}
+
+.feature-list {
+    border-bottom: 1px solid #5c5c5c;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+#list {
+    overflow: scroll;
+    overflow-x: hidden;
+    margin: 0px 0px 0px 0px;
+    height: 50vh;
+}
+
+#list h5 {
+    font-size: 1.00rem;
+    margin: 0;
+    text-align: left;
+    margin-left: 10px;
+}
+
+#list h5 a {
+    color: white;
+    text-decoration: none;
+}
+
+.font-normal {
+    font-weight: normal;
 }
 
 .green {
@@ -105,63 +148,31 @@ body {
     color: rgb(230, 0, 0)
 }
 
-.center {
-    margin: auto;
-    width: 100%;
-}
+/* width */
+::-webkit-scrollbar {
+    width: 7px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: grey; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #bdbdbd; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
 
-#list::-webkit-scrollbar {
-    -webkit-appearance: none;
-}
+  #map-container {
+      background: #1a1c20;
+  }
 
-#list::-webkit-scrollbar:vertical {
-    width: 11px;
-}
-
-#list::-webkit-scrollbar:horizontal {
-    height: 11px;
-}
-
-#list::-webkit-scrollbar-thumb {
-    border: 1px solid white; /* should match background, can't be transparent */
-    background-color: rgba(0, 0, 0, .5);
-}
-
-.cursor-pointer{
-    cursor: pointer;
-}
-
-
-h5 {
-    font-size: 1.00rem;
-    margin: 0;
-    text-align: left;
-    margin-left: 10px;
-}
-
-.feature-list{
-    border-bottom: 1px solid #5c5c5c;
-}
-
-#footer a {
-    color: white;
-    text-decoration: none;
-    font-size: 14px;
-}
-
-#footer .version {
-    font-size: 12px;
-}
-
-#footer p {
-    margin: 5px 0 0 0;
-}
-
-h5 a {
-    color: white;
-    text-decoration: none;
-} 
-
-.font-normal {
-    font-weight: normal;
-}
+  .number {
+      font-size: 2.5vw;
+      font-weight: bold;
+  }

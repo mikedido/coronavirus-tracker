@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
+<html>
     <head>
         <title>Coronavirus - map</title>
         <script src="https://d3js.org/d3.v5.min.js"></script>
@@ -8,112 +6,114 @@
         <link rel="stylesheet" type="text/css" href="/static/css/map.css">
         <link rel="stylesheet" type="text/css" href="/static/css/style.css">
     </head>
-
     <body>
-        {% include 'header.html' %}
-        <div id="main">
-            <div id='confirmed'>
-                <div id="title" class="div-border div-title">
-                    <h3>Total confirmed</h3>
-                    <span class="number red">{{ confirmed['total'] }}</span>
-                </div>
-                <div class="div-list div-border text-center">
-                    <div>
-                        <p>Confirmed Cases by Country/Region/Sovereignty</p>
-                    </div>
-                    <div id="list">
-                        {% if confirmed['data'] %}
-                            {% for country in confirmed['data'] %}
-                                {% if country['total'] > 0 %}
-                                <div class='feature-list cursor-pointer'>
-                                    <h5>
-                                        <a href="/{{ country['country_code'] }}/{{ country['province'] }}">
-                                            <span class='red'>{{ country['total'] }}</span>
-                                            <span>{{ country['country'] }}</span>
-                                            {% if country['province'] %}
-                                                <span class="font-normal">({{ country['province'] }})</span>
-                                            {% endif %}
-                                        </a>
-                                    </h5>
-                                </div>
-                                {% endif %}
-                            {% endfor %}
-                        {% else %}
-                            DATA NOT AVAILABLE
-                        {% endif %}
-                    </div>
+       <div class="container">
+            <div class="header">
+                <div class='header-title'>
+                    <p>Coronavirus COVID-19 Global Cases</p>
                 </div>
             </div>
-            <div id="container" class="container">
+            <div class="total-confirmed div-border div-title block-decoration">
+                <h3 class="text-decoration">Total confirmed</h3>
+                <span class="number red">{{ confirmed['total'] }}</span>
+            </div>
+            <div id="map-container" class="map div-border block-decoration">
                 <div id='loader'></div>
-                <div id="map"></div>
+                <div id="map" class="div-border"></div>
             </div>
-            <div id="death">
-                <div id="title" class="div-border div-title">
-                    <h3>Total deaths</h3>
-                    <span class="number red">{{ death['total'] }}</span>
+            <div class="total-death div-border div-title block-decoration">
+                <h3 class="text-decoration">Total deaths</h3>
+                <span class="number red">{{ death['total'] }}</span>
+            </div>
+            <div class="total-recovered div-border div-title block-decoration">
+                <h3 class="text-decoration">Total recovered</h3>
+                <span class="number green">{{ recovered['total'] }}</span>
+            </div>
+            <div class="list-confirmed div-border block-decoration">
+                <div id="list-title" class="text-decoration text-smal-size">
+                    <p>Confirmed Cases by Country/Region/Sovereignty</p>
                 </div>
-                <div class="div-list div-border text-center">
-                    <div>
-                        <p>Confirmed Cases by Country/Region/Sovereignty</p>
-                    </div>
-                    <div id="list">
-                        {% if death['data'] %}
-                            {% for country in death['data'] %}
-                                {% if country['total'] > 0 %}
-                                <div class='feature-list cursor-pointer'>
-                                    <h5>
-                                        <a href="/{{ country['country_code'] }}/{{ country['province'] }}">
-                                            <span class="red">{{ country['total'] }}</span>
-                                            <span>{{ country['country'] }}</span>
-                                            {% if country['province'] %}
-                                                <span class="font-normal">({{ country['province'] }})</span>
-                                            {% endif %}
-                                        </a>
-                                    </h5>
-                                </div>
-                                {% endif %}
-                            {% endfor %}
-                        {% else %}
-                            DATA NOT AVAILABLE
-                        {% endif %}
-                    </div>
+                <div id="list">
+                    {% if confirmed['data'] %}
+                        {% for country in confirmed['data'] %}
+                            {% if country['total'] > 0 %}
+                            <div class='feature-list cursor-pointer'>
+                                <h5>
+                                    <a href="/{{ country['country_code'] }}/{{ country['province'] }}">
+                                        <span class='red'>{{ country['total'] }}</span>
+                                        <span>{{ country['country'] }}</span>
+                                        {% if country['province'] %}
+                                            <span class="font-normal">({{ country['province'] }})</span>
+                                        {% endif %}
+                                    </a>
+                                </h5>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        DATA NOT AVAILABLE
+                    {% endif %}
                 </div>
             </div>
-            <div id="recovered">
-                <div id="title" class="div-border div-title">
-                    <h3>Total recovered</h3>
-                    <span class="number green">{{ recovered['total'] }}</span>
+            <div class="list-death div-border block-decoration">
+                <div id="list-title" class="text-decoration text-smal-size">
+                    <p>Confirmed Cases by Country/Region/Sovereignty</p>
                 </div>
-                <div class="div-list div-border text-center">
-                    <div>
-                        <p>Confirmed Cases by Country/Region/Sovereignty</p>
-                    </div>
-                    <div id="list">
-                        {% if recovered['data'] %}
-                            {% for country in recovered['data'] %}
-                                {% if country['total'] > 0 %}
-                                <div class='feature-list cursor-pointer'>
-                                    <h5>
-                                        <a href="/{{ country['country_code'] }}/{{ country['province'] }}">
-                                            <span class="green">{{ country['total'] }}</span>
-                                            <span>{{ country['country'] }}</span>
-                                            {% if country['province'] %}
-                                                <span class="font-normal">{{ country['province'] }}</span>
-                                            {% endif %}
-                                        </a>
-                                    </h5>
-                                </div>
-                                {% endif %}
-                            {% endfor %}
-                        {% else %}
-                            DATA NOT AVAILABLE
-                        {% endif %}
-                    </div>
+                <div id="list">
+                    {% if death['data'] %}
+                        {% for country in death['data'] %}
+                            {% if country['total'] > 0 %}
+                            <div class='feature-list cursor-pointer'>
+                                <h5>
+                                    <a href="/{{ country['country_code'] }}/{{ country['province'] }}">
+                                        <span class="red">{{ country['total'] }}</span>
+                                        <span>{{ country['country'] }}</span>
+                                        {% if country['province'] %}
+                                            <span class="font-normal">({{ country['province'] }})</span>
+                                        {% endif %}
+                                    </a>
+                                </h5>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        DATA NOT AVAILABLE
+                    {% endif %}
+                </div>
+            </div>
+            <div class="list-recovered div-border block-decoration">
+                <div id="list-title" class="text-decoration text-smal-size">
+                    <p>Confirmed Cases by Country/Region/Sovereignty</p>
+                </div>
+                <div id="list">
+                    {% if recovered['data'] %}
+                        {% for country in recovered['data'] %}
+                            {% if country['total'] > 0 %}
+                            <div class='feature-list cursor-pointer'>
+                                <h5>
+                                    <a href="/{{ country['country_code'] }}/{{ country['province'] }}">
+                                        <span class="green">{{ country['total'] }}</span>
+                                        <span>{{ country['country'] }}</span>
+                                        {% if country['province'] %}
+                                            <span class="font-normal">{{ country['province'] }}</span>
+                                        {% endif %}
+                                    </a>
+                                </h5>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        DATA NOT AVAILABLE
+                    {% endif %}
+                </div>
+            </div>
+            <div class="footer">
+                <div class="footer-title">
+                    <p>© Copyright 2020. Created by <a href="http://mahdigueffaz.free.fr/resume">Mahdi GUEFFAZ</a></p>
+                    <p><span class='version'>version 1.0.6</span></p>
                 </div>
             </div>
         </div>
-        {% include 'footer.html' %}
     </body>
 </html>
 <script type="text/javascript" src='/static/js/global.js'></script>
