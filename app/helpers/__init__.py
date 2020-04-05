@@ -1,4 +1,5 @@
 from datetime import datetime
+from flask import jsonify
 
 
 def sorted_history_date(data):
@@ -31,3 +32,20 @@ def sorted_data(data, reversed):
         'data': data_tuple,
         'total': data['total']
     }
+
+
+def data_country_by_province(data):
+    """Get all the province data of a country"""
+    regrouped_data = {}
+
+    for province_values in data:
+        for key, value in province_values.items():
+            if key in regrouped_data.keys():
+                regrouped_data[key] = regrouped_data[key] + int(value)
+            else:
+                regrouped_data[key] = int(value)
+
+    return jsonify({
+        'data': regrouped_data,
+        'last_updated': ''
+    })

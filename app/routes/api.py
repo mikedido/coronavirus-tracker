@@ -1,4 +1,5 @@
 from app.services import get_data, get_all_data, regrouped_by_country
+from app.helpers import data_country_by_province
 from flask import jsonify
 import dateutil.parser
 from app import app
@@ -34,71 +35,31 @@ def api_confirmed():
     return jsonify(sorted(data['locations'], key=lambda k: k.get('total', 0), reverse=True))
 
 
-@app.route('/api/recovered/<country_code>/', defaults={'province_name': ''})
-@app.route('/api/recovered/<country_code>/<province_name>')
-def api_recovered_country(country_code, province_name):
+@app.route('/api/<string:category>/<country_code>/', defaults={'province_name': ''})
+@app.route('/api/<string:category>/<country_code>/<province_name>')
+def api_confirmed_country(category, country_code, province_name):
     """
-    Get all the historic recovered by country
+    Get all the historic confirmed, deaths or recovered by country and/or provinces
     """
-    data = get_data('recovered')
+    if category.lower() not in ('confirmed', 'deaths', 'recovered'):
+        return ''
 
+    data = get_data(category)
+    result_data = []
+    # By country and province
     for country in data['locations']:
-
-        if country['country_code'] == country_code.upper() and country['province'] == province_name:
-            return jsonify({
-                'data': country['history'],
-                'last_updated': dateutil.parser.parse(data['last_updated'])
-            })
-    else:
-        return jsonify({
-            'data': '',
-            'last_updated': ''
-        })
-
-
-@app.route('/api/deaths/<country_code>/', defaults={'province_name': ''})
-@app.route('/api/deaths/<country_code>/<province_name>')
-def api_deaths_country(country_code, province_name):
-    """
-    Get all the historic deaths by country
-    """
-    data = get_data('deaths')
-
-    for country in data['locations']:
-        if country['country_code'] == country_code.upper() and country['province'] == province_name:
-
-            return jsonify({
-                'data': country['history'],
-                'last_updated': dateutil.parser.parse(data['last_updated'])
-            })
-    else:
-        return jsonify({
-            'data': '',
-            'last_updated': ''
-        })
-
-
-@app.route('/api/confirmed/<country_code>/', defaults={'province_name': ''})
-@app.route('/api/confirmed/<country_code>/<province_name>')
-def api_confirmed_country(country_code, province_name):
-    """
-    Get all the historic confirmed by country
-    """
-    data = get_data('confirmed')
-
-    for country in data['locations']:
-
         if country['country_code'] == country_code.upper() and country['province'].lower() == province_name.lower():
 
             return jsonify({
                 'data': country['history'],
                 'last_updated': dateutil.parser.parse(data['last_updated'])
             })
-    else:
-        return jsonify({
-            'data': '',
-            'last_updated': ''
-        })
+    # By country, so we must regrouped province
+    for country in data['locations']:
+        if country['country_code'] == country_code.upper():
+            result_data.append(country['history'])
+
+    return data_country_by_province(result_data)
 
 
 @app.route('/api/all')
