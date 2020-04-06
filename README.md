@@ -13,7 +13,7 @@ An app to analysis data about the corona virus / COVID-19 on the world by giving
 
 Also a charts available to evaluate the number of deaths, confirmed and recovered by country.
 
-The app is avalable on the following address : https://corona-stats-world.herokuapp.com/
+The app is avalable by clicking on the following link : https://corona-stats-world.herokuapp.com/
 
 ## Screenshot
 
@@ -23,17 +23,15 @@ The app is avalable on the following address : https://corona-stats-world.heroku
 
 
 ## Features
-* __Live data__: Shows the most recent data, and updates automatically.
+* __Data__: Shows the most recent data.
 * __Distribution map__ with two levels of details:
   * __Countries__: When the user mouse over country on the map. Fewer details show the number of deaths, confirmed, recovered and active are shown.
   * __List__ : list of the countries regrouped by deaths, confirmed and recovered+.
 * __Charts__:
-   * __Current state chart__ for all countries (and cities).
-   * __Timeline chart__ for all countries (and cities).
-   * __Top affected countries__ chart with info about every country.
-  * Option for using a __logarithmic__ scale.
-* __Red color scale__: Reflects the number of confirmed cases. In addition to increasing circle size.
-* __Statistics__: Including the number of confirmed, recovered, and deaths, in addition to percents.
+   * __Confirmed chart__ for all countries.
+   * __Deaths chart__ for all countries.
+   * __Recovered chart__ for all country.
+* __Red color scale__: Reflects the number of confirmed and death cases.
 
 ## How to Use
 #### Build from source code
@@ -49,16 +47,20 @@ The app is avalable on the following address : https://corona-stats-world.heroku
 make test
 ```
 
+#### Runing linter
+```
+make lint
+```
+
 ## TODO
 
 * __Search__ for countries & cities.
 * __Cities__ add détails of the cities
 * __Chart__ add map by country and their détails by city
 * __Share__ stats & charts as images.
-* __Active__ Add the active person by country
+* __Statistics__: Including the number of confirmed, recovered, and deaths, in addition to percents.
 
  ## Data
-
  The data of coronavirus are retrieve from the api of the github project : https://github.com/ExpDev07/coronavirus-tracker-api
 
  ## The map

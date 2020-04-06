@@ -34,7 +34,7 @@ def sorted_data(data, reversed):
     }
 
 
-def data_country_by_province(data):
+def data_country_by_province(data, last_updated):
     """Get all the province data of a country"""
     regrouped_data = {}
 
@@ -47,5 +47,5 @@ def data_country_by_province(data):
 
     return jsonify({
         'data': regrouped_data,
-        'last_updated': ''
+        'last_updated': last_updated
     })
