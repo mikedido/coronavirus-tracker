@@ -45,21 +45,22 @@ def api_confirmed_country(category, country_code, province_name):
         return ''
 
     data = get_data(category)
-    result_data = []
+    data_country_all_province = []
+
     # By country and province
     for country in data['locations']:
         if country['country_code'] == country_code.upper() and country['province'].lower() == province_name.lower():
-
             return jsonify({
                 'data': country['history'],
                 'last_updated': dateutil.parser.parse(data['last_updated'])
             })
+
     # By country, so we must regrouped province
     for country in data['locations']:
         if country['country_code'] == country_code.upper():
-            result_data.append(country['history'])
+            data_country_all_province.append(country['history'])
 
-    return data_country_by_province(result_data)
+    return data_country_by_province(data_country_all_province, dateutil.parser.parse(data['last_updated']))
 
 
 @app.route('/api/all')
