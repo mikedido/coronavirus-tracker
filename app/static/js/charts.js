@@ -19,8 +19,8 @@ var opts = {
  * @param {*} chartName 
  */
 function createChart(url, divName, chartName, chartColor) {
-    var target = document.getElementById(divName);
     // trigger loader
+    var target = document.getElementById(divName);
     var spinner = new Spinner(opts).spin(target);
 
     const margin = {top: 20, right: 30, bottom: 30, left: 60},

@@ -1,3 +1,16 @@
+// loader settings
+var opts = {
+    lines: 9, // The number of lines to draw
+    length: 9, // The length of each line
+    width: 10, // The line thickness
+    radius: 14, // The radius of the inner circle
+    color: '#EE3124', // #rgb or #rrggbb or array of colors
+    speed: 1.5, // Rounds per second
+    trail: 40, // Afterglow percentage
+    className: 'spinner', // The CSS class to assign to the spinner
+    position: 'relative'
+};  
+
 /**
  * Get the previous date of a known date
  * 
@@ -19,7 +32,10 @@ function getPreviousDate(d) {
  * @param {string} divName
  */
 function createHistogramme(url, divId, divName, histColorClass) {
-    
+    // trigger loader
+    var target = document.getElementById(divId);
+    var spinner = new Spinner(opts).spin(target);
+
     const margin = {top: 20, right: 20, bottom: 90, left: 120},
     width = document.getElementById(divId).offsetWidth * 0.95 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
@@ -41,11 +57,12 @@ function createHistogramme(url, divId, divName, histColorClass) {
     const div = d3.select("body").append("div")
     .attr("class", "tooltip")         
     .style("opacity", 0);
-
+    
     d3.json(url).then(function(data) {
         // Conversion des caractères en nombres
         last_updated = data['last_updated'];
         data = data['data'];
+        spinner.stop();
 
         // Construct my data object
         dataArray = [];
@@ -113,6 +130,8 @@ function createHistogramme(url, divId, divName, histColorClass) {
                     .style("opacity", 0);
             });
     });
+
+    return d3;
 }
 
 
