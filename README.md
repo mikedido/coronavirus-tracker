@@ -11,15 +11,15 @@
 
 An app to analysis data about the corona virus / COVID-19 on the world by giving the number of deaths, confirmed and recovered person. 
 
-Also a charts available to evaluate the number of deaths, confirmed and recovered by country.
+Also a charts and histogrammes available to evaluate the number of deaths, confirmed and recovered by country.
 
 The app is avalable by clicking on the following link : https://corona-stats-world.herokuapp.com/
 
 ## Screenshot
 
-
 <img src="images/map.png">
 <img src="images/charts.png" >
+<img src="images/histo.png" >
 
 
 ## Features
@@ -31,6 +31,9 @@ The app is avalable by clicking on the following link : https://corona-stats-wor
    * __Confirmed chart__ for all countries.
    * __Deaths chart__ for all countries.
    * __Recovered chart__ for all country.
+   * __Confirmed Histogramme__ the number of confirmed by day and by country
+   * __Deaths Histogramme__ the number of deaths by day and by country
+   * __Recovered Histogramme__ the number of recovered by day and by country
 * __Red color scale__: Reflects the number of confirmed and death cases.
 
 ## How to Use
