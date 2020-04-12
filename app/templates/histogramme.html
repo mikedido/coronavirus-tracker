@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Coronavirus - map</title>
+        <script src="https://d3js.org/d3.v5.min.js"></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.0.1/spin.min.js'></script>
+        <link rel="stylesheet" type="text/css" href="/static/css/histogramme.css">
+        <link rel="stylesheet" type="text/css" href="/static/css/commun.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script type="text/javascript">
+            var countryCode = '{{ country_code }}'
+            var provinceName = '{{ province_name }}'
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            {% include 'header.html' %}
+            <div id="country_histo_confirmed" class="confirmed-histo div-border">
+                <div class="histo-title">
+                    <h3>Confimed by day in {{ country_name }} {{ province_name }}</h3>
+                </div>
+                <div id='histo_confirmed'></div>
+            </div>
+            <div id="country_histo_deaths" class="death-histo div-border">
+                <div class="histo-title">
+                    <h3>Deaths by day in {{ country_name }} {{ province_name }}</h3>
+                </div>
+                <div id='histo_deaths'></div>
+            </div>
+            <div id="country_histo_recovered" class="recovered-histo div-border">
+                <div class="histo-title">
+                    <h3>Recovered by day in {{ country_name }} {{ province_name }}</h3>
+                </div>
+                <div id='histo_recovered'></div>
+            </div>
+            {% include 'footer.html' %}
+        </div>
+</body>
+</html>
+<script type="text/javascript" src='/static/js/histogramme.js'></script>
