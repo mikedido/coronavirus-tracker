@@ -63,6 +63,8 @@ make lint
  ## Data
  The data of coronavirus are retrieve from the api of the github project : https://github.com/ExpDev07/coronavirus-tracker-api
 
+ This API used the data from : jhu - https://github.com/CSSEGISandData/COVID-19 - Worldwide Data repository operated by the Johns Hopkins University Center for Systems Science and Engineering (JHU CSSE).
+
  ## The map
  The used map are the same used on d3dataviz. Visit the website : https://www.datavis.fr/index.php?page=map-improve
 
