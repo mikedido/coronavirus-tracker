@@ -57,3 +57,7 @@
 .cursor-pointer {
     cursor: pointer;
 }
+
+.menu{
+    display: none;
+}

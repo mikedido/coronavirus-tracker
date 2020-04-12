@@ -44,7 +44,6 @@
     color: white;
 }
 
-
 .domain{
     color: white;
 }
@@ -121,19 +120,16 @@
 }
 
 #country_confirmed {
-   
     margin: 10px 10px 10px 10px;
     background-color: #212121;
 }
 
 #country_deaths {
-   
     margin: 10px 10px 10px 10px;
     background-color: #212121;
 }
 
 #country_recovered {
-   
     margin: 10px 10px 10px 10px;
     background-color: #212121;
 }
