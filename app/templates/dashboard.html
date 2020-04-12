@@ -1,40 +1,32 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Coronavirus - map</title>
-        <script src="https://d3js.org/d3.v5.min.js"></script>
-        <script src='https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.0.1/spin.min.js'></script>
-        <link rel="stylesheet" type="text/css" href="/static/css/chart.css">
-        <link rel="stylesheet" type="text/css" href="/static/css/commun.css">
-        <script type="text/javascript">
-            var countryCode = '{{ country_code }}'
-            var provinceName = '{{ province_name }}'
-        </script>
-    </head>
-    <body>
-        <div class="container">
-            {% include 'header.html' %}
-            <div id="country_confirmed" class="confirmed-chart div-border">
-                <div class="chart-title">
-                    <h3>Confimed in {{ country_name }} {{ province_name }}</h3>
-                </div>
-                <div id='chart_confirmed'></div>
-            </div>
-            <div id="country_deaths" class="death-chart div-border">
-                <div class="chart-title">
-                    <h3>Deaths in {{ country_name }} {{ province_name }}</h3>
-                </div>
-                <div id='chart_deaths'></div>
-            </div>
-            <div id="country_recovered" class="recovered-chart div-border">
-                <div class="chart-title">
-                    <h3>Recovered in {{ country_name }} {{ province_name }}</h3>
-                </div>
-                <div id='chart_recovered'></div>
-            </div>
-            <div class="chart">chart</div>
-            {% include 'footer.html' %}
+{% extends "layout.html" %}
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="/static/css/chart.css">
+    <script type="text/javascript">
+        var countryCode = '{{ country_code }}'
+        var provinceName = '{{ province_name }}'
+    </script>
+{% endblock %}
+{% block content %}
+    <div id="country_confirmed" class="confirmed-chart div-border">
+        <div class="chart-title">
+            <h3>Confimed in {{ country_name }} {{ province_name }}</h3>
         </div>
-    </body>
-</html>
+        <div id='chart_confirmed'></div>
+    </div>
+    <div id="country_deaths" class="death-chart div-border">
+        <div class="chart-title">
+            <h3>Deaths in {{ country_name }} {{ province_name }}</h3>
+        </div>
+        <div id='chart_deaths'></div>
+    </div>
+    <div id="country_recovered" class="recovered-chart div-border">
+        <div class="chart-title">
+            <h3>Recovered in {{ country_name }} {{ province_name }}</h3>
+        </div>
+        <div id='chart_recovered'></div>
+    </div>
+    <div class="chart">chart</div>
+{% endblock %}    
+{% block script %}
 <script type="text/javascript" src='/static/js/charts.js'></script>
+{% endblock %}
