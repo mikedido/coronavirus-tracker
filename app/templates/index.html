@@ -45,6 +45,7 @@
                     {% if data %}
                         {% for country in data %}           
                             {% if country['total']['confirmed'] > 0 %}
+                            <div class="feature-item" onclick="location.href='/{{ country['country_code'] }}'">
                                 <span class="map-sidebar-section-country-name text-bold">
                                     {{ country['country'] }}
                                 </span>
@@ -82,6 +83,7 @@
                                          </div>
                                     </div>
                                 </div>
+                            </div>
                             {% endif %}
                         {% endfor %}
                     {% else %}
