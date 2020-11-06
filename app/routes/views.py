@@ -1,7 +1,8 @@
-from flask import render_template, redirect, url_for
+from flask import render_template, redirect, url_for, json
 from app import app
-from app.services import get_data, get_country_name
+from app.services import get_data, get_country_name, get_all_data
 from app.helpers import sorted_data
+import requests
 
 
 @app.route('/')
@@ -9,11 +10,13 @@ def index():
     """
     The principal route of the website
     """
+    data = get_all_data()
     return render_template(
         'index.html',
-        confirmed=sorted_data(get_data('confirmed'), True),
-        death=sorted_data(get_data('deaths'), True),
-        recovered=sorted_data(get_data('recovered'), True)
+        data=sorted(data['data'], key=lambda entry: entry['total'].get('confirmed', 0), reverse=True),
+        total_confirmed=data['latest']['confirmed'],
+        total_deaths=data['latest']['deaths'],
+        total_recovered=data['latest']['recovered']
     )
 
 
