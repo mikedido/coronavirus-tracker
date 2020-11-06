@@ -85,3 +85,7 @@
     flex-grow: 1;
     /*color: #fff;*/
   }
+
+  .map-sidebar-section-country-name-image {
+      margin-left: 10px;
+  }

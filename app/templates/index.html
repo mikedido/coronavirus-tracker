@@ -46,9 +46,10 @@
                         {% for country in data %}           
                             {% if country['total']['confirmed'] > 0 %}
                             <div class="feature-item" onclick="location.href='/{{ country['country_code'] }}'">
-                                <span class="map-sidebar-section-country-name text-bold">
-                                    {{ country['country'] }}
-                                </span>
+                                <div class="map-sidebar-section-country-name-image">
+                                    <img src={{ "https://www.countryflags.io/" + country['country_code'] + "/flat/24.png" }} style="margin-bottom: -5px;"> 
+                                    <span class="text-bold">{{ country['country'] }}</span>
+                                </div>
                                 <div class="map-sidebar-section-item">
                                     <div id="left">
                                         <div class="map-sidebar-section-country-confirmed">
