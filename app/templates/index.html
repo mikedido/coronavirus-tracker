@@ -2,109 +2,101 @@
 {% block head %}
 <link rel="stylesheet" type="text/css" href="/static/css/index.css">
 <link rel="stylesheet" type="text/css" href="/static/css/map.css">
+<script type="text/javascript">
+    var total_confirmed = '{{ total_confirmed }}'
+    var total_deaths = '{{ total_deaths }}'
+    var total_recovered = '{{ total_recovered }}'
+</script>
 {% endblock %}
 {% block content %}
     <div class="sidebar">
-        <div class="total-confirmed">
-            <div>
-                <h3 class="text-decoration">Total confirmed</h3>
-                <span class="number red">{{ confirmed['total'] }}</span>
+        <div class="">
+            <div class="">
+                <span class="text-bold text-size-20">World</span>
             </div>
-            <div>
-                <div>
-                    <h3 class="text-decoration">Total deaths</h3>
-                    <span class="number red">{{ death['total'] }}</span>
+            <div class="">
+                <span class="number red">{{ total_confirmed }}</span>
+                <span class="bloc0_title">Total confirmed</span>
+            </div>
+        </div>
+        <div id="donuts_world"></div>
+        <div class="total-confirmed">
+            <div id="bloc0">
+                <span class="bloc0_number number orange">{{ total_confirmed - total_recovered }}</span>
+                <span class="bloc0_title text-decoration">Active</span>
+            </div>
+            <div id="block_container">
+                <div id="bloc1">
+                    <span class="number violet">{{ total_deaths }}</span>
+                    <span class="text-decoration">Deaths</span>
                 </div>
-                <div>
-                    <h3 class="text-decoration">Total recovered</h3>
-                    <span class="number green">{{ recovered['total'] }}</span>
+                <div id="bloc2">
+                    <span class="number green">{{ total_recovered }}</span>
+                    <span class="text-decoration">Recovered</span>
                 </div>
             </div>
         </div>
-        <div class="list-confirmed">
+        <div class="listData">
             <div id="list-title" class="text-decoration text-smal-size">
-                <p>Confirmed Cases by Country/Region/Sovereignty</p>
+                <p>Country Cases by Country/Region/Sovereignty</p>
             </div>
             <div id="list">
-                {% if confirmed['data'] %}
-                    {% for country in confirmed['data'] %}
-                        {% if country['total'] > 0 %}
-                        <div class='feature-list cursor-pointer'>
-                            <h5>
-                                <a href="/{{ country['country_code'] }}/{{ country['province'] }}">
-                                    <span class='red'>{{ country['total'] }}</span>
-                                    <span>{{ country['country'] }}</span>
-                                    {% if country['province'] %}
-                                        <span class="font-normal">({{ country['province'] }})</span>
-                                    {% endif %}
-                                </a>
-                            </h5>
-                        </div>
-                        {% endif %}
-                    {% endfor %}
-                {% else %}
-                    DATA NOT AVAILABLE
-                {% endif %}
+                <div class='feature-list cursor-pointer'>
+                    {% if data %}
+                        {% for country in data %}           
+                            {% if country['total']['confirmed'] > 0 %}
+                                <span class="map-sidebar-section-country-name text-bold">
+                                    {{ country['country'] }}
+                                </span>
+                                <div class="map-sidebar-section-item">
+                                    <div id="left">
+                                        <div class="map-sidebar-section-country-confirmed">
+                                            Total cases 
+                                         </div>
+                                         <div class="map-sidebar-section-country-confirmed">
+                                             Active
+                                         </div>
+                                         <div class="map-sidebar-section-country-death">
+                                            Deaths
+                                         </div>
+                                         <div class="map-sidebar-section-country-recovered">
+                                             Recovered
+                                         </div>
+                                    </div>
+                                    <div id="right">
+                                        <div class="map-sidebar-section-country-confirmed red">
+                                            {{ country['total']['confirmed'] }}
+                                         </div>
+                                         <div class="map-sidebar-section-country-active orange">
+                                            {% if country['total']['recovered'] %}
+                                                {{ country['total']['confirmed'] - country['total']['recovered'] }}
+                                            {% else %}
+                                                {{ country['total']['confirmed'] }}
+                                            {% endif %}
+                                         </div>
+                                         <div class="map-sidebar-section-country-death violet">
+                                            {{ country['total']['death'] }}
+                                         </div>
+                                         <div class="map-sidebar-section-country-recovered green">
+                                            {{ country['total']['recovered'] }}
+                                         </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        DATA NOT AVAILABLE
+                    {% endif %}                
+                </div>
             </div>
         </div>
     </div>    
     <div id="map-container" class="map">
         <div id='loader'></div>
-        <div id="map" class="div-border"></div>
+        <div id="map" class=""></div>
     </div>
-        <!--<div class="list-death div-border block-decoration">
-            <div id="list-title" class="text-decoration text-smal-size">
-                <p>Confirmed Cases by Country/Region/Sovereignty</p>
-            </div>
-            <div id="list">
-                {% if death['data'] %}
-                    {% for country in death['data'] %}
-                        {% if country['total'] > 0 %}
-                        <div class='feature-list cursor-pointer'>
-                            <h5>
-                                <a href="/{{ country['country_code'] }}/{{ country['province'] }}">
-                                    <span class="red">{{ country['total'] }}</span>
-                                    <span>{{ country['country'] }}</span>
-                                    {% if country['province'] %}
-                                        <span class="font-normal">({{ country['province'] }})</span>
-                                    {% endif %}
-                                </a>
-                            </h5>
-                        </div>
-                        {% endif %}
-                    {% endfor %}
-                {% else %}
-                    DATA NOT AVAILABLE
-                {% endif %}
-            </div>
-        </div>-->
-        <!--<div class="list-recovered div-border block-decoration">
-            <div id="list-title" class="text-decoration text-smal-size">
-                <p>Confirmed Cases by Country/Region/Sovereignty</p>
-            </div>
-            <div id="list">
-                {% if recovered['data'] %}
-                    {% for country in recovered['data'] %}
-                        {% if country['total'] > 0 %}
-                        <div class='feature-list cursor-pointer'>
-                            <h5>
-                                <a href="/{{ country['country_code'] }}/{{ country['province'] }}">
-                                    <span class="green">{{ country['total'] }}</span>
-                                    <span>{{ country['country'] }}</span>
-                                    {% if country['province'] %}
-                                        <span class="font-normal">{{ country['province'] }}</span>
-                                    {% endif %}
-                                </a>
-                            </h5>
-                        </div>
-                        {% endif %}
-                    {% endfor %}
-                {% else %}
-                    DATA NOT AVAILABLE
-                {% endif %}
-            </div>
-        </div>-->
 {% endblock %}
 {% block script %}
 <script type="text/javascript" src='/static/js/global.js'></script>
+<script type="text/javascript" src='/static/js/donuts.js'></script>
 {% endblock %}

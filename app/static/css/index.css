@@ -20,26 +20,6 @@
     grid-area: map;
 }
 
-.total-death {
-    grid-area: total-death;
-}
-
-.total-recovered {
-    grid-area: total-recovered;
-}
-
-.list-confirmed {
-    grid-area: list-confirmed;
-}
-
-.list-death {
-    grid-area: list-death;
-}
-
-.list-recovered {
-    grid-area: list-recovered;
-}
-
 .text-smal-size {
     font-size: 12px;
 }
@@ -55,3 +35,53 @@
 .menu{
     display: none;
 }
+
+
+.sideBar {
+    background: #D3D3D3;
+}
+
+
+#leftsideMenu ul li {
+    border-bottom: 1px dashed lightgray;
+    background-color: cadetblue;
+  }
+  
+  #leftsideMenu ul li a {
+    padding: 8px 20px 8px 20px;
+    color: white;
+    display: block;
+  }
+  
+  #leftsideMenu ul li a:hover {
+    background-color: lightgreen;
+    transition: 0.5s;
+    padding-left: 30px;
+    padding-right: 10px;
+  }
+
+  .map-sidebar-section-item {
+      border: solid;
+  }
+
+  .map-sidebar-section-item {
+    background-color: rgba(210, 210, 210, 0.5);
+    border: 1px solid #000;
+    padding: 0.5rem;
+    display: flex;
+  }
+  
+  .map-sidebar-section-country-info {
+
+  }
+  .map-sidebar-section-country-name {
+      
+  }
+
+  #left,
+  #right {
+    /*background-color: #bebebe;*/
+    padding: 0.5rem;
+    flex-grow: 1;
+    /*color: #fff;*/
+  }

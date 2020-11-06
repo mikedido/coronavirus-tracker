@@ -1,25 +1,10 @@
 body {
-    background-color: black;
+    background-color: #F5F5F5;
     font-family: "Avenir Next W01","Avenir Next W00","Avenir Next",Avenir,"Helvetica Neue",sans-serif;
 }
 
 .footer {
     grid-area: footer;
-}
-
-.header {
-    background-color: #212121;
-    padding: 1px 0;
-    color: white;
-    border: 1px solid #363636;
-    margin: 10px 5px 5px 5px;
-}
-
-.header-title{
-    margin: 10px 5px 5px 5px;
-    text-align: center;
-    float: left;
-    width: 95%;
 }
 
 .menu {
@@ -39,7 +24,6 @@ body {
 
 .header-title a {
     text-decoration: none;
-    color: white;
 }
 
 .source-title {
@@ -86,7 +70,6 @@ body {
 
 .text-decoration {
     text-align: center;
-    color: white;
 }
 
 .text-smal-size {
@@ -128,8 +111,16 @@ body {
     color: rgb(112, 168, 0);
 }
 
+.violet {
+    color: rgb(186,85,211)
+}
+
 .red {
     color: rgb(230, 0, 0)
+}
+
+.orange {
+    color: rgb(255,140,0)
 }
 
 /* width */
@@ -153,12 +144,40 @@ body {
 }
 
 #map-container {
-    background: #1a1c20;
+    background-color: #D3D3D3;
+
 }
 
 .number {
-    font-size: 2.5vw;
+    font-size: 1.5vw;
     font-weight: bold;
+}
+
+#block_container {
+    text-align:center;
+    display: flex;
+}
+
+#bloc0, #bloc1, #bloc2 > div
+{
+    display:inline;
+    vertical-align: middle;
+    width: 50%;
+}
+
+.bloc0_number {
+    margin: 0px auto;
+    margin-top: 10px;
+    width: 50%;
+    text-align: center;
+    display: table;
+}
+
+.bloc0_title {
+    margin: 0px auto;
+    width: 50%;
+    text-align: center;
+    display: table;
 }
 
 /* 
@@ -258,4 +277,12 @@ body {
   
 .show {
     display: block;
+}
+
+.text-bold {
+    font-weight: bold;
+}
+
+.text-size-20 {
+    font-size: 20px;
 }
