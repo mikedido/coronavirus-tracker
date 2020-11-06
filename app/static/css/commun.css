@@ -158,14 +158,14 @@ body {
     display: flex;
 }
 
-#bloc0, #bloc1, #bloc2 > div
+#total-confirmed, #total_deaths, #total_recovered > div
 {
     display:inline;
     vertical-align: middle;
     width: 50%;
 }
 
-.bloc0_number {
+.total_active_number {
     margin: 0px auto;
     margin-top: 10px;
     width: 50%;
@@ -173,11 +173,15 @@ body {
     display: table;
 }
 
-.bloc0_title {
+.total_active_title {
     margin: 0px auto;
     width: 50%;
     text-align: center;
     display: table;
+}
+
+.span-under {
+    display: block;
 }
 
 /* 

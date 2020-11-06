@@ -16,21 +16,21 @@
             </div>
             <div class="">
                 <span class="number red">{{ total_confirmed }}</span>
-                <span class="bloc0_title">Total confirmed</span>
+                <span class="span-under">Total confirmed</span>
             </div>
         </div>
         <div id="donuts_world"></div>
-        <div class="total-confirmed">
-            <div id="bloc0">
-                <span class="bloc0_number number orange">{{ total_confirmed - total_recovered }}</span>
-                <span class="bloc0_title text-decoration">Active</span>
+        <div class="">
+            <div id="total_active">
+                <span class="total_active_number number orange">{{ total_confirmed - total_recovered }}</span>
+                <span class="total_active_title text-decoration">Active</span>
             </div>
             <div id="block_container">
-                <div id="bloc1">
+                <div id="total_deaths">
                     <span class="number violet">{{ total_deaths }}</span>
                     <span class="text-decoration">Deaths</span>
                 </div>
-                <div id="bloc2">
+                <div id="total_recovered">
                     <span class="number green">{{ total_recovered }}</span>
                     <span class="text-decoration">Recovered</span>
                 </div>
