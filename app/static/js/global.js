@@ -13,7 +13,7 @@ const svg = d3.select('#map').append("svg")
 //add legend
 function addLegend(min, max) {
     var legend = svg.append('g')
-        .attr('transform', 'translate(60, 250)');
+        .attr('transform', 'translate(80, '+height/2+')');
 
     legend.selectAll()
         .data(d3.range(colors.length))
@@ -42,6 +42,7 @@ function addLegend(min, max) {
     
     legendAxis = legend.append("g")
         .attr("class", "axis")
+        .attr('stroke', 'black')
         .call(d3.axisLeft(legendScale));
     
     return legend;
@@ -55,10 +56,10 @@ function addTooltip() {
     
     tooltip.append("polyline") // The rectangle containing the text, it is 210px width and 60 height
         .attr("points","0,0 210,0 210,130 0,130 0,0")
-        .style("fill", "#222")
+        .style("fill", "#bebebe")
         .style("stroke","black")
         .style("opacity","0.9")
-        .style("stroke-width","1")
+        .style("stroke-width","0")
         .style("padding", "1em");
     
     tooltip.append("line") // A line inserted between country name and score
@@ -72,7 +73,7 @@ function addTooltip() {
     
     var text = tooltip.append("text") // Text that will contain all tspan (used for multilines)
         .style("font-size", "13px")
-        .style("fill", "white")
+        .style("fill", "black")
         .attr("transform", "translate(0, 20)");
     
     text.append("tspan") // Country name udpated by its id
@@ -86,7 +87,7 @@ function addTooltip() {
     text.append("tspan") // Fixed text
         .attr("x", 20) // ie, tooltip width / 2
         .attr("y", 30)
-        .style("fill", "white")
+        .style("fill", "black")
         .text("Confirmed : ");
     
     text.append("tspan") // Score udpated by its id
@@ -97,7 +98,7 @@ function addTooltip() {
     text.append("tspan") // Fixed text
         .attr("x", 20) // ie, tooltip width / 2
         .attr("y", 50)
-        .style("fill", "white")
+        .style("fill", "black")
         .text("Deaths : ");
     
     text.append("tspan") // Deaths udpated by its id
@@ -108,7 +109,7 @@ function addTooltip() {
     text.append("tspan") // Fixed text
         .attr("x", 20) // ie, tooltip width / 2
         .attr("y", 70)
-        .style("fill", "white")
+        .style("fill", "black")
         .text("Recovered : ");
     
     text.append("tspan") // Recovered udpated by its id
@@ -119,7 +120,7 @@ function addTooltip() {
     text.append("tspan") // Fixed text
         .attr("x", 20) // ie, tooltip width / 2
         .attr("y", 90)
-        .style("fill", "white")
+        .style("fill", "black")
         .text("Active : ");
     
     text.append("tspan") // Recovered udpated by its id
@@ -134,7 +135,7 @@ function addTooltip() {
 function addTitle(date) {
     svg.append("text")
         .attr("x", (width / 2))
-        .attr("y", 25)
+        .attr("y", height)
         .attr("text-anchor", "middle")
         .style("fill", "white")
         .style("font-weight", "300")

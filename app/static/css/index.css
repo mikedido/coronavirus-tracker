@@ -81,11 +81,16 @@
   #left,
   #right {
     /*background-color: #bebebe;*/
-    padding: 0.5rem;
+    padding: 0.2rem;
     flex-grow: 1;
+    font-size: 0.8rem;
     /*color: #fff;*/
   }
 
   .map-sidebar-section-country-name-image {
       margin-left: 10px;
+  }
+
+  #donuts_world {
+      text-align: center;
   }

@@ -1,7 +1,9 @@
 // set the dimensions and margins of the graph
-var donuts_width = 250,
-    donuts_height = 250,
-    donuts_margin = 60;
+var donuts_width = document.getElementById("map-container").offsetHeight / 3, //<50
+    donuts_height = document.getElementById("map-container").offsetHeight / 3, //250
+    donuts_margin = document.getElementById("map-container").offsetHeight / 40; //30
+    
+console.log( document.getElementById("map-container").offsetHeight / 8);
 
 // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
 var radius = Math.min(donuts_width, donuts_height) / 2 - donuts_margin
@@ -34,12 +36,10 @@ donuts_svg
   .enter()
   .append('path')
   .attr('d', d3.arc()
-    .innerRadius(100)         // This is the size of the donut hole
+    .innerRadius(50)         // This is the size of the donut hole
     .outerRadius(radius)
   )
   .attr('fill', function(d){ return(color(d.data.key)) })
   .attr("stroke", "black")
   .style("stroke-width", "2px")
   .style("opacity", 0.7)
-
-console.log(total_confirmed);
