@@ -275,4 +275,4 @@ Promise.all(promises).then(function(values) {
 }
 
 //creation de la map
-createMap('/api/all/regrouped');
+createMap('/v0/all/regrouped');

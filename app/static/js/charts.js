@@ -179,6 +179,6 @@ function createChart(url, divName, chartName, chartColor) {
 }
 
 
-createChart('/api/confirmed/'+countryCode+'/'+provinceName, 'country_confirmed', 'chart_confirmed', "redLine");
-createChart('/api/deaths/'+countryCode+'/'+provinceName, 'country_deaths', 'chart_deaths', 'redLine');
-createChart('/api/recovered/'+countryCode+'/'+provinceName, 'country_recovered', 'chart_recovered', 'greenLine');
+createChart('/v0/confirmed/'+countryCode+'/'+provinceName, 'country_confirmed', 'chart_confirmed', "redLine");
+createChart('/v0/deaths/'+countryCode+'/'+provinceName, 'country_deaths', 'chart_deaths', 'redLine');
+createChart('/v0/recovered/'+countryCode+'/'+provinceName, 'country_recovered', 'chart_recovered', 'greenLine');
