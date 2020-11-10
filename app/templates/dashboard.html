@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 {% block head %}
     <link rel="stylesheet" type="text/css" href="/static/css/chart.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/histogramme.css">
     <script type="text/javascript">
         var countryCode = '{{ country_code }}'
         var provinceName = '{{ province_name }}'
@@ -82,9 +83,28 @@
     
         <div class="histo">
             <!--Histogramme-->
+            <div id="country_histo_confirmed" class="confirmed-histo div-border">
+                <div class="histo-title">
+                    <h3>Confimed by day in {{ country_name }} {{ province_name }}</h3>
+                </div>
+                <div id='histo_confirmed'></div>
+            </div>
+            <div id="country_histo_deaths" class="death-histo div-border">
+                <div class="histo-title">
+                    <h3>Deaths by day in {{ country_name }} {{ province_name }}</h3>
+                </div>
+                <div id='histo_deaths'></div>
+            </div>
+            <div id="country_histo_recovered" class="recovered-histo div-border">
+                <div class="histo-title">
+                    <h3>Recovered by day in {{ country_name }} {{ province_name }}</h3>
+                </div>
+                <div id='histo_recovered'></div>
+            </div>
         </div>
     </section>
 {% endblock %}    
 {% block script %}
 <script type="text/javascript" src='/static/js/charts.js'></script>
+<script type="text/javascript" src='/static/js/histogramme.js'></script>
 {% endblock %}
