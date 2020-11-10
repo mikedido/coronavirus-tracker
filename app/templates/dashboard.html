@@ -1,110 +1,105 @@
 {% extends "layout.html" %}
 {% block head %}
-    <link rel="stylesheet" type="text/css" href="/static/css/chart.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/histogramme.css">
-    <script type="text/javascript">
-        var countryCode = '{{ country_code }}'
-        var provinceName = '{{ province_name }}'
-    </script>
+<link rel="stylesheet" type="text/css" href="/static/css/index.css">
+<link rel="stylesheet" type="text/css" href="/static/css/map.css">
+<script type="text/javascript">
+    var total_confirmed = '{{ total_confirmed }}'
+    var total_deaths = '{{ total_deaths }}'
+    var total_recovered = '{{ total_recovered }}'
+</script>
 {% endblock %}
 {% block content %}
-    <section>
-        <div class="header">
-            <!--coutnry info-->
+    <div class="sidebar">
+        <div class="">
             <div class="">
-                <h1>
-                    <img src={{ "https://www.countryflags.io/" + country_code + "/shiny/64.png" }} style="margin-bottom: -5px;"> 
-                    <span class="country-name">{{ country_name }}</span>
-                </h1>
+                <span class="text-bold text-size-20">World</span>
+            </div>
+            <div class="">
+                <span class="number red">{{ total_confirmed }}</span>
+                <span class="span-under">Total confirmed</span>
             </div>
         </div>
-        <div class="info-section">
-            <!--info COVID19-->
-            <div class="section-secondary-numbers">
-                <div class="section" >
-                    <div class="section-number">xxx</div>
-                    <div class="section-name">Total cases</div>
+        <div id="donuts_world"></div>
+        <div class="">
+            <div id="total_active">
+                <span class="total_active_number number orange">{{ total_confirmed - total_recovered }}</span>
+                <span class="total_active_title text-decoration">Active</span>
+            </div>
+            <div id="block_container">
+                <div id="total_deaths">
+                    <span class="number violet">{{ total_deaths }}</span>
+                    <span class="text-decoration">Deaths</span>
                 </div>
-                <div class="section" >
-                    <div class="section-number">xxx</div>
-                    <div class="section-name">Deaths</div>
-                </div>
-                <div class="section" >
-                    <div class="section-number">xxx</div>
-                    <div class="section-name">Active</div>
-                </div>
-                <div class="section" >
-                    <div class="section-number">xxx</div>
-                    <div class="section-name">Population</div>
-                </div>
-                <div class="section" >
-                    <div class="section-number">xxx</div>
-                    <div class="section-name">Cases per milion</div>
-                </div>
-                <div class="section" >
-                    <div class="section-number">xxx</div>
-                    <div class="section-name">Death per million</div>
-                </div>
-                <div class="section" >
-                    <div class="section-number">xxx</div>
-                    <div class="section-name">Etalité percente</div>
-                </div>
-                <div class="section" >
-                    <div class="section-number">xxx</div>
-                    <div class="section-name">Recovered</div>
-                </div>
-                <div class="section" >
-                    <div class="section-number">xxx</div>
-                    <div class="section-name">Recovered Percente</div>
+                <div id="total_recovered">
+                    <span class="number green">{{ total_recovered }}</span>
+                    <span class="text-decoration">Recovered</span>
                 </div>
             </div>
         </div>
-        <div class="chart">
-            <!--chart-->
-            <div id="country_confirmed" class="confirmed-chart div-border">
-                <div class="chart-title">
-                    <h3>Confimed in {{ country_name }} {{ province_name }}</h3>
-                </div>
-                <div id='chart_confirmed'></div>
+        <div class="listData">
+            <div id="list-title" class="text-decoration text-smal-size">
+                <p>Country Cases by Country/Region/Sovereignty</p>
             </div>
-            <div id="country_deaths" class="death-chart div-border">
-                <div class="chart-title">
-                    <h3>Deaths in {{ country_name }} {{ province_name }}</h3>
+            <div id="list">
+                <div class='feature-list cursor-pointer'>
+                    {% if data %}
+                        {% for country in data %}           
+                            {% if country['total']['confirmed'] > 0 %}
+                            <div class="feature-item" onclick="location.href='/{{ country['country_code'] }}'">
+                                <div class="map-sidebar-section-country-name-image">
+                                    <img src={{ "https://www.countryflags.io/" + country['country_code'] + "/flat/24.png" }} style="margin-bottom: -5px;"> 
+                                    <span class="text-bold">{{ country['country'] }}</span>
+                                </div>
+                                <div class="map-sidebar-section-item">
+                                    <div id="left">
+                                        <div class="map-sidebar-section-country-confirmed">
+                                            Total cases 
+                                         </div>
+                                         <div class="map-sidebar-section-country-confirmed">
+                                             Active
+                                         </div>
+                                         <div class="map-sidebar-section-country-death">
+                                            Deaths
+                                         </div>
+                                         <div class="map-sidebar-section-country-recovered">
+                                             Recovered
+                                         </div>
+                                    </div>
+                                    <div id="right">
+                                        <div class="map-sidebar-section-country-confirmed red">
+                                            {{ country['total']['confirmed'] }}
+                                         </div>
+                                         <div class="map-sidebar-section-country-active orange">
+                                            {% if country['total']['recovered'] %}
+                                                {{ country['total']['confirmed'] - country['total']['recovered'] }}
+                                            {% else %}
+                                                {{ country['total']['confirmed'] }}
+                                            {% endif %}
+                                         </div>
+                                         <div class="map-sidebar-section-country-death violet">
+                                            {{ country['total']['death'] }}
+                                         </div>
+                                         <div class="map-sidebar-section-country-recovered green">
+                                            {{ country['total']['recovered'] }}
+                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        DATA NOT AVAILABLE
+                    {% endif %}                
                 </div>
-                <div id='chart_deaths'></div>
-            </div>
-            <div id="country_recovered" class="recovered-chart div-border">
-                <div class="chart-title">
-                    <h3>Recovered in {{ country_name }} {{ province_name }}</h3>
-                </div>
-                <div id='chart_recovered'></div>
             </div>
         </div>
-    
-        <div class="histo">
-            <!--Histogramme-->
-            <div id="country_histo_confirmed" class="confirmed-histo div-border">
-                <div class="histo-title">
-                    <h3>Confimed by day in {{ country_name }} {{ province_name }}</h3>
-                </div>
-                <div id='histo_confirmed'></div>
-            </div>
-            <div id="country_histo_deaths" class="death-histo div-border">
-                <div class="histo-title">
-                    <h3>Deaths by day in {{ country_name }} {{ province_name }}</h3>
-                </div>
-                <div id='histo_deaths'></div>
-            </div>
-            <div id="country_histo_recovered" class="recovered-histo div-border">
-                <div class="histo-title">
-                    <h3>Recovered by day in {{ country_name }} {{ province_name }}</h3>
-                </div>
-                <div id='histo_recovered'></div>
-            </div>
-        </div>
-    </section>
-{% endblock %}    
+    </div>    
+    <div id="map-container" class="map">
+        <div id='loader'></div>
+        <div id="map" class=""></div>
+    </div>
+{% endblock %}
 {% block script %}
-<script type="text/javascript" src='/static/js/charts.js'></script>
-<script type="text/javascript" src='/static/js/histogramme.js'></script>
+<script type="text/javascript" src='/static/js/global.js'></script>
+<script type="text/javascript" src='/static/js/donuts.js'></script>
 {% endblock %}

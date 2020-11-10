@@ -6,5 +6,4 @@ app/tests/__pycache__/
 app/services/__pycache__/
 app/__init__.pyc
 app/routes/__init__.py
- app/routes/api/__pycache__/
- app/routes/api/__pycache__/
+app/routes/api/__pycache__/

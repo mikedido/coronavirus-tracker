@@ -12,13 +12,12 @@ def index():
     """
     data = get_all_data()
     return render_template(
-        'index.html',
+        'dashboard.html',
         data=sorted(data['data'], key=lambda entry: entry['total'].get('confirmed', 0), reverse=True),
         total_confirmed=data['latest']['confirmed'],
         total_deaths=data['latest']['deaths'],
         total_recovered=data['latest']['recovered']
     )
-
 
 @app.route('/<country_code>/', defaults={'province_name': ''})
 @app.route('/<country_code>/<province_name>')
@@ -29,22 +28,8 @@ def country_stats(country_code, province_name):
     # Get the country name
     country_name = get_country_name(country_code)
     if country_name is not None:
-        return render_template('dashboard.html', country_code=country_code, country_name=country_name, province_name=province_name)
+        return render_template('country.html', country_code=country_code, country_name=country_name, province_name=province_name)
     return redirect(url_for('index'))
-
-
-@app.route('/histo/<country_code>/', defaults={'province_name': ''})
-@app.route('/histo/<country_code>/<province_name>')
-def country_stats_histogramme(country_code, province_name):
-    """
-    The dashboard charts (deaths, confirmed, recovered) by country
-    """
-    # Get the country name
-    country_name = get_country_name(country_code)
-    if country_name is not None:
-        return render_template('histogramme.html', country_code=country_code, country_name=country_name, province_name=province_name)
-    return redirect(url_for('index'))
-
 
 @app.errorhandler(404)
 def page_not_found(error):
