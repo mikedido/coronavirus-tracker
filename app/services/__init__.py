@@ -41,7 +41,6 @@ def get_data(category):
         latest = list(history.values())[-1];
         # Normalize the item and append to locations.
         locations.append({
-            # General info.
             'country': country,
             'country_code': countrycodes.country_code(country),
             'province': item['Province/State'],

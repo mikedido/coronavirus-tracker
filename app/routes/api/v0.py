@@ -1,11 +1,16 @@
-from app.services import get_data, get_all_data, regrouped_by_country
-from app.helpers import data_country_by_province
-from flask import jsonify
-import dateutil.parser
 from app import app
+import dateutil.parser
+from flask import jsonify
+from flask import Blueprint
+from app.helpers import data_country_by_province
+from app.services import get_data, get_all_data, regrouped_by_country
+"""
+Version 0 of the API
+"""
 
+version0 = Blueprint('v0', __name__, url_prefix='/v0')
 
-@app.route('/api/recovered')
+@version0.route('/recovered')
 def api_recovered():
     """
     Get the recovered by country
@@ -15,7 +20,7 @@ def api_recovered():
     return jsonify(sorted(data['locations'], key=lambda k: k.get('total', 0), reverse=True))
 
 
-@app.route('/api/deaths')
+@version0.route('/deaths')
 def api_deaths():
     """
     Get the deaths by country
@@ -25,7 +30,7 @@ def api_deaths():
     return jsonify(sorted(data['locations'], key=lambda k: k.get('total', 0), reverse=True))
 
 
-@app.route('/api/confirmed')
+@version0.route('/confirmed')
 def api_confirmed():
     """
     get the confirmed by country
@@ -35,8 +40,8 @@ def api_confirmed():
     return jsonify(sorted(data['locations'], key=lambda k: k.get('total', 0), reverse=True))
 
 
-@app.route('/api/<string:category>/<country_code>/', defaults={'province_name': ''})
-@app.route('/api/<string:category>/<country_code>/<province_name>')
+@version0.route('/<string:category>/<country_code>/', defaults={'province_name': ''})
+@version0.route('/<string:category>/<country_code>/<province_name>')
 def api_confirmed_country(category, country_code, province_name):
     """
     Get all the historic confirmed, deaths or recovered by country and/or provinces
@@ -63,7 +68,7 @@ def api_confirmed_country(category, country_code, province_name):
     return data_country_by_province(data_country_all_province, dateutil.parser.parse(data['last_updated']))
 
 
-@app.route('/api/all')
+@version0.route('/all')
 def api_all():
     """
     Get all the detah, confirmed, recovered
@@ -71,7 +76,7 @@ def api_all():
     return jsonify(get_all_data())
 
 
-@app.route('/api/all/regrouped')
+@version0.route('/all/regrouped')
 def api_all_regrouped_by_country():
     """
     Get all the detah, confirmed, recovered
