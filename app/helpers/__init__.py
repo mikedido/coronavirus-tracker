@@ -19,6 +19,7 @@ def formated_date(data):
         splited_date = date.split('/')
         date_formated = "{:02d}/{:02d}/{:2d}".format(int(splited_date[0]), int(splited_date[1]), int(splited_date[2]))
         data_formated[date_formated + "20"] = data[date]
+
     return data_formated
 
 
@@ -28,24 +29,19 @@ def sorted_data(data, reversed):
     """
     data_tuple = data['locations']
     data_tuple = sorted(data_tuple, key=lambda k: k.get('total', 0), reverse=reversed)
+
     return {
         'data': data_tuple,
         'total': data['total']
     }
 
 
-def data_country_by_province(data, last_updated):
+def data_country_by_province(data):
     """Get all the province data of a country"""
     regrouped_data = {}
 
     for province_values in data:
         for key, value in province_values.items():
-            if key in regrouped_data.keys():
-                regrouped_data[key] = regrouped_data[key] + int(value)
-            else:
-                regrouped_data[key] = int(value)
+            regrouped_data[key] = regrouped_data.get(key, 0) + int(value)
 
-    return jsonify({
-        'data': regrouped_data,
-        'last_updated': last_updated
-    })
+    return regrouped_data

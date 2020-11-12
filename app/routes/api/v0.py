@@ -65,8 +65,10 @@ def api_confirmed_country(category, country_code, province_name):
         if country['country_code'] == country_code.upper():
             data_country_all_province.append(country['history'])
 
-    return data_country_by_province(data_country_all_province, dateutil.parser.parse(data['last_updated']))
-
+    return {
+        'data': data_country_by_province(data_country_all_province),
+        'last_updated': ''
+    }
 
 @version0.route('/all')
 def api_all():
