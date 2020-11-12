@@ -3,9 +3,10 @@ Johns Hopkins University Center for Systems Science and Engineering (JHU CSSE)
 """
 import requests
 import csv
+import dateutil.parser
 from datetime import datetime, timedelta
 from cachetools import cached, TTLCache
-from app.helpers import sorted_history_date, formated_date
+from app.helpers import sorted_history_date, formated_date, data_country_by_province
 from app.utils import countrycodes, date as date_util
 
 """
@@ -18,7 +19,7 @@ data_daily_reports_base_url = "https://raw.githubusercontent.com/CSSEGISandData/
 @cached(cache=TTLCache(maxsize=1024, ttl=3600))
 def get_all_data_by_category(category):
     """
-    Get all the data of all the country by category. There is three category (confirmed | death | recovered)
+    Get all the data of all the countries by category. There is three category (confirmed | death | recovered)
     """
     category = category.lower()
 
@@ -62,6 +63,73 @@ def get_all_data_by_category(category):
         'last_updated': datetime.utcnow().isoformat() + 'Z'
     }
 
+
+@cached(cache=TTLCache(maxsize=1024, ttl=3600))
+def get_data_country_by_category_by_province(category, country_code, province_name='', administration=''):
+    """
+    Get all the data of a country by category. There is three category (confirmed | death | recovered)
+    """
+    category = category.lower()
+
+    # URL to request data from.
+    url = data_time_series_base_url + "time_series_covid19_%s_global.csv" % category
+
+    request = requests.get(url)
+    text = request.text
+    # Parse the CSV.
+    data = list(csv.DictReader(text.splitlines()))
+    # The normalized locations.
+    locations = []
+
+    for item in data:
+        if country_code == countrycodes.country_code(item['Country/Region']):
+            # Filter out all the dates.
+            history = dict(filter(lambda element: date_util.is_date(element[0]), item.items()))
+            # Sorted date history
+            history = sorted_history_date(formated_date(history))
+            # Country for this location.
+            country = item['Country/Region']
+            # Latest data insert value.
+            latest = list(history.values())[-1];
+            # Normalize the item and append to locations.
+            locations.append({
+                # General info.
+                'country': country,
+                'country_code': countrycodes.country_code(country),
+                'province': item['Province/State'],
+                # History.
+                'history': history,
+                # Latest statistic.
+                'total': int(latest or 0),
+            })
+    
+    #check if the country without province exist
+    data_country_all_province = []
+
+    # By country and province
+    for country in locations:
+        if country['country_code'] == country_code.upper() and country['province'].lower() == province_name.lower():
+            return {
+                'data': country['history'],
+                'country': country['country'],
+                'country_code': country['country_code'],
+                'province': country['province'],
+                'last_updated': ''
+            }
+    #otherwise regrouped all provinces of the country
+    for country in locations:
+        if country['country_code'] == country_code.upper():
+            data_country_all_province.append(country['history'])
+    
+    return {
+        'data': data_country_by_province(data_country_all_province),
+        'country': country['country'],
+        'country_code': country['country_code'],
+        'province': '',
+        'last_updated': ''
+    }
+
+
 @cached(cache=TTLCache(maxsize=1024, ttl=3600))
 def get_all_data():
     """
@@ -85,8 +153,8 @@ def get_all_data():
                 'deaths' : item['Deaths'],
                 'recovered' : item['Recovered'],
                 'active' : item['Active'],
-                'Incidence_Rate' : item['Incident_Rate'],
-                'Case-Fatality_Ratio' : item['Case_Fatality_Ratio']
+                'Incident_Rate' : item['Incident_Rate'],
+                'Case_Fatality_Ratio' : item['Case_Fatality_Ratio']
             }
         })
 
@@ -95,11 +163,11 @@ def get_all_data():
         'last_updated': datetime.utcnow().isoformat() + 'Z'
     }
 
+
 def get_data_country(country_code, province_name=''):
     """
     Get the data information (death, confirmed, recovered, ) of a country and theirs province.
     """
-
     url = data_daily_reports_base_url + "%s.csv" % (datetime.now() - timedelta(days=1)).strftime('%m-%d-%Y')
     request = requests.get(url)
     text= request.text
@@ -116,8 +184,8 @@ def get_data_country(country_code, province_name=''):
                 'deaths' : '',
                 'recovered' : '',
                 'active' : '',
-                'Incidence_Rate' : '',
-                'Case-Fatality_Ratio' : ''
+                'Incident_Rate' : '',
+                'Case_Fatality_Ratio' : ''
             },
             'provinces': []
         }
