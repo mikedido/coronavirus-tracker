@@ -1,35 +1,22 @@
 """
 Johns Hopkins University Center for Systems Science and Engineering (JHU CSSE)
 """
-import requests
-import csv
+from .request import Request
 import dateutil.parser
 from datetime import datetime, timedelta
 from cachetools import cached, TTLCache
 from app.helpers import sorted_history_date, formated_date, data_country_by_province
 from app.utils import countrycodes, date as date_util
 
-"""
-Base URL for fetching data.
-"""
-data_time_series_base_url = "https://raw.githubusercontent.com/CSSEGISandData/2019-nCoV/master/csse_covid_19_data/csse_covid_19_time_series/"
-info_country_url = "https://raw.githubusercontent.com/CSSEGISandData/2019-nCoV/master/csse_covid_19_data/UID_ISO_FIPS_LookUp_Table.csv"
-data_daily_reports_base_url = "https://raw.githubusercontent.com/CSSEGISandData/2019-nCoV/master/csse_covid_19_data/csse_covid_19_daily_reports/"
+
+request = Request()
 
 @cached(cache=TTLCache(maxsize=1024, ttl=3600))
 def get_all_data_by_category(category):
     """
     Get all the data of all the countries by category. There is three category (confirmed | death | recovered)
     """
-    category = category.lower()
-
-    # URL to request data from.
-    url = data_time_series_base_url + "time_series_covid19_%s_global.csv" % category
-
-    request = requests.get(url)
-    text = request.text
-    # Parse the CSV.
-    data = list(csv.DictReader(text.splitlines()))
+    data = request.get_data_time_series(category)
     # The normalized locations.
     locations = []
 
@@ -69,15 +56,7 @@ def get_data_country_by_category_by_province(category, country_code, province_na
     """
     Get all the data of a country by category. There is three category (confirmed | death | recovered)
     """
-    category = category.lower()
-
-    # URL to request data from.
-    url = data_time_series_base_url + "time_series_covid19_%s_global.csv" % category
-
-    request = requests.get(url)
-    text = request.text
-    # Parse the CSV.
-    data = list(csv.DictReader(text.splitlines()))
+    data = request.get_data_time_series(category)
     # The normalized locations.
     locations = []
 
@@ -135,11 +114,7 @@ def get_all_data():
     """
     Get all the data information (death, confirmed, recovered,) of each country.
     """
-    url = data_daily_reports_base_url + "%s.csv" % (datetime.now() - timedelta(days=1)).strftime('%m-%d-%Y')
-    request = requests.get(url)
-    text= request.text
-    # Parse the CSV.
-    data = list(csv.DictReader(text.splitlines()))
+    data = request.get_data_daily_reports()
     locations = []
 
     for item in data:
@@ -168,11 +143,7 @@ def get_data_country(country_code, province_name=''):
     """
     Get the data information (death, confirmed, recovered, ) of a country and theirs province.
     """
-    url = data_daily_reports_base_url + "%s.csv" % (datetime.now() - timedelta(days=1)).strftime('%m-%d-%Y')
-    request = requests.get(url)
-    text= request.text
-    # Parse the CSV.
-    data = list(csv.DictReader(text.splitlines()))
+    data = request.get_data_daily_reports()
 
     locations = [
         {
@@ -232,15 +203,9 @@ def get_data_country(country_code, province_name=''):
     
     #add population for provinces
     #ouverture du fichier
-    request = requests.get(info_country_url)
-    text = request.text
-    # Parse the CSV.
-    data = list(csv.DictReader(text.splitlines()))
+    data = request.get_data_info_country()
     for province in locations[0]['provinces']:
         province['population'] = get_population_by_province(data, province['province'], province['administration'])
-        pass
-
-
 
     #result
     return {
@@ -253,11 +218,8 @@ def get_all_data_grouped_by_country():
     """
     Get all the data information (death, confirmed, recovered,) grouped by country (Many country have many provinces).
     """
-    url = data_daily_reports_base_url + "%s.csv" % (datetime.now() - timedelta(days=1)).strftime('%m-%d-%Y')
-    request = requests.get(url)
-    text= request.text
-    # Parse the CSV.
-    data = list(csv.DictReader(text.splitlines()))
+    data = request.get_data_daily_reports()
+    
     locations = []
     country_added = {}
     index = 0
@@ -295,14 +257,10 @@ def get_population_by_county(country_code):
     """
     Get the population of a country by country code
     """
-    country_code = country_code.upper()
-    request = requests.get(info_country_url)
-    text = request.text
-    # Parse the CSV.
-    data = list(csv.DictReader(text.splitlines()))
+    data = request.get_data_info_country()
 
     for item in data:
-        if item['iso2'] == country_code:
+        if item['iso2'] == country_code.upper():
             return item['Population']
 
     return ''

@@ -73,7 +73,7 @@ def api_confirmed_country(category, country_code, province_name):
 @version0.route('/all')
 def api_all():
     """
-    Get all the detah, confirmed, recovered
+    Get all the deaths, confirmed, recovered by country
     """
     return jsonify(get_all_data())
 
