@@ -10,36 +10,33 @@
 {% endblock %}
 {% block content %}
     <div class="sidebar">
-        <div class="">
-            <div class="">
+        <div class="text-decoration">
+            <div class="data_confirmed">
                 <span class="text-bold text-size-20">World</span>
             </div>
             <div class="">
-                <span class="number red">{{ total_confirmed }}</span>
+                <span class="number-heigh red">{{ total_confirmed | pretty_number }}</span>
                 <span class="span-under">Total confirmed</span>
             </div>
         </div>
         <div id="donuts_world"></div>
-        <div class="">
+        <div class="data_active">
             <div id="total_active">
-                <span class="total_active_number number orange">{{ total_confirmed - total_recovered }}</span>
+                <span class="total_active_number number orange">{{ total_active | pretty_number }}</span>
                 <span class="total_active_title text-decoration">Active</span>
             </div>
             <div id="block_container">
                 <div id="total_deaths">
-                    <span class="number violet">{{ total_deaths }}</span>
+                    <span class="number purple">{{ total_deaths | pretty_number }}</span>
                     <span class="text-decoration">Deaths</span>
                 </div>
                 <div id="total_recovered">
-                    <span class="number green">{{ total_recovered }}</span>
+                    <span class="number green">{{ total_recovered | pretty_number }}</span>
                     <span class="text-decoration">Recovered</span>
                 </div>
             </div>
         </div>
         <div class="listData">
-            <div id="list-title" class="text-decoration text-smal-size">
-                <p>Country Cases by Country/Region/Sovereignty</p>
-            </div>
             <div id="list">
                 <div class='feature-list cursor-pointer'>
                     {% if data %}
@@ -67,20 +64,16 @@
                                     </div>
                                     <div id="right">
                                         <div class="map-sidebar-section-country-confirmed red">
-                                            {{ country['total']['confirmed'] }}
+                                            {{ country['total']['confirmed'] | pretty_number }}
                                          </div>
                                          <div class="map-sidebar-section-country-active orange">
-                                            {% if country['total']['recovered'] %}
-                                                {{ country['total']['confirmed'] - country['total']['recovered'] }}
-                                            {% else %}
-                                                {{ country['total']['confirmed'] }}
-                                            {% endif %}
+                                            {{ country['total']['active'] | pretty_number }}
                                          </div>
-                                         <div class="map-sidebar-section-country-death violet">
-                                            {{ country['total']['death'] }}
+                                         <div class="map-sidebar-section-country-death purple">
+                                            {{ country['total']['deaths'] | pretty_number }}
                                          </div>
                                          <div class="map-sidebar-section-country-recovered green">
-                                            {{ country['total']['recovered'] }}
+                                            {{ country['total']['recovered'] | pretty_number }}
                                          </div>
                                     </div>
                                 </div>
