@@ -1,5 +1,5 @@
-import requests
 import csv
+import requests
 import dateutil.parser
 from datetime import datetime
 from cachetools import cached, TTLCache

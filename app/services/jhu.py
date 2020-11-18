@@ -178,7 +178,7 @@ def get_data_country(country_code, province_name=''):
             locations[0]['country'] = item['Country_Region']
             locations[0]['country_code'] = countrycodes.country_code(item['Country_Region'])
             provinces.append({
-                'province': item['Province_State'],
+                'name': item['Province_State'],
                 'administration': item['Admin2'],
                 #'population': get_population_by_province(item['Province_State'], item['Admin2']),
                 'total' : {
@@ -186,7 +186,7 @@ def get_data_country(country_code, province_name=''):
                     'deaths' : item['Deaths'],
                     'recovered' : item['Recovered'],
                     'active' : item['Active'],
-                    'Incidence_Rate' : item['Incident_Rate'],
+                    'Incident_Rate' : item['Incident_Rate'],
                     'Case_Fatality_Ratio' : item['Case_Fatality_Ratio']
                 }
             })
@@ -205,7 +205,7 @@ def get_data_country(country_code, province_name=''):
     #ouverture du fichier
     data = request.get_data_info_country()
     for province in locations[0]['provinces']:
-        province['population'] = get_population_by_province(data, province['province'], province['administration'])
+        province['population'] = get_population_by_province(data, province['name'], province['administration'])
 
     #result
     return {
@@ -223,12 +223,16 @@ def get_all_data_grouped_by_country():
     locations = []
     country_added = {}
     index = 0
+    total_confirmed = 0
+    total_deaths = 0
+    total_recovered = 0
+    
 
     for item in data:
         # country/province exist
         country_code = countrycodes.country_code(item['Country_Region'])
 
-        if not country_code in country_added :
+        if not country_code in country_added or country_code == 'XX':
             locations.append({
                 'country': item['Country_Region'],
                 'country_code': country_code,
@@ -247,8 +251,19 @@ def get_all_data_grouped_by_country():
             locations[country_added[country_code]]['total']['active'] += (0 if item['Active'] == '' else int(item['Active']))
             locations[country_added[country_code]]['total']['deaths'] += int(item['Deaths'])
 
+        total_confirmed += int(item['Confirmed'])
+        total_deaths += int(item['Deaths'])
+        total_recovered += int(item['Recovered'])
+
+
     return {
         'locations': locations,
+        'latest': {
+            'confirmed': total_confirmed,
+            'deaths': total_deaths,
+            'recovered': total_recovered,
+            'active': total_confirmed - total_deaths - total_recovered,
+        },
         'last_updated': datetime.utcnow().isoformat() + 'Z'
     }
 
