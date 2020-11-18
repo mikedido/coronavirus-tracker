@@ -39,6 +39,7 @@ is_3166_1 = {
     "Brunei Darussalam": "BN",
     "Bulgaria": "BG",
     "Burkina Faso": "BF",
+    "Burma": "MM",
     "Burundi": "BI",
     "Cambodia": "KH",
     "Cameroon": "CM",
@@ -57,7 +58,7 @@ is_3166_1 = {
     "Congo, the Democratic Republic of the": "CD",
     "Cook Islands": "CK",
     "Costa Rica": "CR",
-    "Côte d'Ivoire": "CI",
+    "Cote d'Ivoire": "CI",
     "Croatia": "HR",
     "Cuba": "CU",
     "Curaçao": "CW",
@@ -259,6 +260,7 @@ is_3166_1 = {
 # by the ISO 3166-1 norm
 synonyms = {
     "Bolivia": "Bolivia, Plurinational State of",
+    "Brunei": "Brunei Darussalam",
     "Congo (Brazzaville)": "Congo",
     "Congo (Kinshasa)": "Congo, the Democratic Republic of the",
     "Laos": "Lao People's Democratic Republic",
@@ -279,6 +281,8 @@ synonyms = {
     "Saint Barthelemy": "Saint Barthélemy",
     "Palestine": "Palestine, State of",
     "Vatican City": "Holy See (Vatican City State)",
+    "Taiwan*": "Taiwan, Province of China",
+    "West Bank and Gaza": "Palestine, State of"
     # "Others" has no mapping
 }
 
