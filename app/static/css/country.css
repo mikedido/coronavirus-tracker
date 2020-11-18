@@ -1,0 +1,126 @@
+.container {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-template-areas:
+  "header"
+  "info-section"
+  "chart"
+  "histo";
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+}
+
+.container > div {
+  /*border: 1px dashed #888;*/
+}
+
+.header {
+  grid-area: header;
+}
+
+.chart {
+  grid-area: chart;
+}
+
+.histo {
+  grid-area: histo;
+}
+
+.region-page-local-map-list {
+  width: 100%;   
+}
+
+.region-page-local-map {
+  margin-bottom: 40px;
+}
+
+table {
+  width: 100%
+}
+
+thead {
+  display: block;
+  background-color: grey;
+  color: #FDFDFD;  
+}
+
+tbody {
+  display: block;
+  overflow: auto;
+  width: 100%;
+  height: 300px;
+}
+  tr {
+      text-align: center;
+  }
+
+  td:nth-child(1), th:nth-child(1) { min-width: 50px; }
+  td:nth-child(2), th:nth-child(2) { min-width: 150px; }
+  td:nth-child(3), th:nth-child(3) { width: 100px; }
+  td:nth-child(4), th:nth-child(4) { min-width: 100px; }
+  td:nth-child(5), th:nth-child(5) { min-width: 100px; }
+  td:nth-child(6), th:nth-child(6) { width: 100px; }
+  td:nth-child(7), th:nth-child(7) { min-width: 100px; }
+  td:nth-child(8), th:nth-child(8) { min-width: 100px; }
+  td:nth-child(9), th:nth-child(9) { min-width: 100px; }
+  td:nth-child(10), th:nth-child(10) { min-width: 100px; }
+  td:nth-child(11), th:nth-child(11) { min-width: 100px; }
+  td:nth-child(12), th:nth-child(12) { min-width: 100px; }
+}
+
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+  
+/* Style the buttons inside the tab */
+.tab button {
+  float: left;
+  border: none;
+  border-right: solid 0.5px;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+  
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent  {
+  padding: 50px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+
+.tabcontentHisto {
+  padding: 50px 12px;
+  border: 1px solid #ccc;
+  border-top: none; 
+}
+
+tbody tr:nth-child(even) {
+  background-color: #eee;
+}
+
+tbody tr:hover{
+  cursor: pointer;
+  background-color: aqua;
+}
+
+.tab-decor {
+  border-bottom: 1px solid;
+  height: 48px;
+}

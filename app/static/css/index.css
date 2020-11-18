@@ -4,7 +4,7 @@
     height: 100%;
     grid-template-areas:
     "sideBar map";
-    grid-template-columns: 1fr 4fr;
+    grid-template-columns: 4fr 7fr;
     grid-template-rows: 1fr;
 }
 
@@ -94,3 +94,27 @@
   #donuts_world {
       text-align: center;
   }
+
+  .data_active {
+      margin-bottom: 20px;
+  }
+
+
+@media only screen and (max-width: 1000px) {
+    #block_container {
+        text-align: center;
+        display: block;
+    }
+
+    #total_active {
+        text-align: center;
+    }
+
+    .total_active_number  {
+        display: contents;
+    }
+
+    .total_active_title {
+        display: contents;
+    }
+}

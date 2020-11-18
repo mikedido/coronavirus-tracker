@@ -1,46 +1,9 @@
-.container {
-    display: grid;
-    width: 100%;
-    height: 100%;
-    grid-template-areas:
-    "header"
-    "info-section"
-    "chart"
-    "histo";
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr;
-}
-
-.container > div {
-    /*border: 1px dashed #888;*/
-}
-
-.header {
-    grid-area: header;
-}
-
-.confirmed-histo {
-    grid-area: confirmed-histo;
-}
-
-.deaths-histo {
-    grid-area: deaths-histo;
-}
-
-.recovered-histo {
-    grid-area: recovered-histo;
-}
-
-.footer {
-    grid-area: footer;
-}
-
 .domain{
-    color: white;
+    color: black;
 }
 
 .tick{
-    color: white;
+    color: black;
 }
 
 .redBar {
@@ -49,6 +12,10 @@
 
 .greenBar {
     fill: green;
+}
+
+.purpleBar {
+    fill: rgb(186,85,211);
 }
 
 .greenBar:hover {
@@ -69,7 +36,7 @@
     -webkit-border-radius: 4px;
     padding: 8px;
     color: #fff;
-    background-color: #000;
+    background-color: grey;
     font: 12px sans-serif;
     max-width: 300px;
 }
@@ -82,15 +49,12 @@
 
 #country_histo_confirmed {
     margin: 10px 10px 10px 10px;
-    background-color: #212121;
 }
 
 #country_histo_deaths {
     margin: 10px 10px 10px 10px;
-    background-color: #212121;
 }
 
 #country_histo_recovered {
     margin: 10px 10px 10px 10px;
-    background-color: #212121;
 }
