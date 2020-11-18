@@ -1,6 +1,6 @@
 //initialisation
-const width = document.getElementById("map-container").offsetWidth * 1.0,
-height = document.getElementById("map-container").offsetHeight,
+const width = document.getElementById("map-container").offsetWidth * 1.3,
+height = document.getElementById("map-container").offsetHeight * 1.3,
 legendCellSize = 30,
 colors = ['#ff9999', '#ff4d4d', '#ff0000', '#e60000', '#b30000', '#660000'];
 
@@ -55,7 +55,7 @@ function addTooltip() {
         .style("display", "none");
     
     tooltip.append("polyline") // The rectangle containing the text, it is 210px width and 60 height
-        .attr("points","0,0 210,0 210,130 0,130 0,0")
+        .attr("points","0,0 210,0 210,170 0,170 0,0")
         .style("fill", "#bebebe")
         .style("stroke","black")
         .style("opacity","0.9")
@@ -64,21 +64,21 @@ function addTooltip() {
     
     tooltip.append("line") // A line inserted between country name and score
         .attr("x1", 40)
-        .attr("y1", 25)
-        .attr("x2", 160)
-        .attr("y2", 25)
+        .attr("y1", 60)
+        .attr("x2", 150)
+        .attr("y2", 60)
         .style("stroke","white")
         .style("stroke-width","0.5")
         .attr("transform", "translate(0, 5)");
-    
+
     var text = tooltip.append("text") // Text that will contain all tspan (used for multilines)
         .style("font-size", "13px")
         .style("fill", "black")
         .attr("transform", "translate(0, 20)");
-    
+
     text.append("tspan") // Country name udpated by its id
         .attr("x", 105) // ie, tooltip width / 2
-        .attr("y", 0)
+        .attr("y", 30)
         .attr("id", "tooltip-country")
         .attr("text-anchor", "middle")
         .style("font-weight", "600")
@@ -86,7 +86,7 @@ function addTooltip() {
     
     text.append("tspan") // Fixed text
         .attr("x", 20) // ie, tooltip width / 2
-        .attr("y", 30)
+        .attr("y", 70)
         .style("fill", "black")
         .text("Confirmed : ");
     
@@ -97,7 +97,7 @@ function addTooltip() {
 
     text.append("tspan") // Fixed text
         .attr("x", 20) // ie, tooltip width / 2
-        .attr("y", 50)
+        .attr("y", 90)
         .style("fill", "black")
         .text("Deaths : ");
     
@@ -108,7 +108,7 @@ function addTooltip() {
 
     text.append("tspan") // Fixed text
         .attr("x", 20) // ie, tooltip width / 2
-        .attr("y", 70)
+        .attr("y", 110)
         .style("fill", "black")
         .text("Recovered : ");
     
@@ -119,7 +119,7 @@ function addTooltip() {
 
     text.append("tspan") // Fixed text
         .attr("x", 20) // ie, tooltip width / 2
-        .attr("y", 90)
+        .attr("y", 130)
         .style("fill", "black")
         .text("Active : ");
     
@@ -190,7 +190,7 @@ const path = d3.geoPath()
     .pointRadius(2)
     .projection(projection);
     
-const cGroup = svg.append("g");
+const cGroup = svg.append("g").attr('transform', 'translate(0, 0)');
 
 var promises = [];
 promises.push(d3.json("static/files/world-countries-no-antartica.json"));
@@ -220,8 +220,8 @@ Promise.all(promises).then(function(values) {
             .attr("class", "country");
         
 
-        const min = d3.min(scores['data'], function(e) { return +e.total.confirmed; }),
-        max = d3.max(scores['data'], function(e) { return +e.total.confirmed; });
+        const min = d3.min(scores['locations'], function(e) { return +e.total.confirmed; }),
+        max = d3.max(scores['locations'], function(e) { return +e.total.confirmed; });
 
         var quantile = d3.scaleQuantile().domain([min, max])
             .range(colors);
@@ -231,7 +231,7 @@ Promise.all(promises).then(function(values) {
 
         addTitle(scores['last_updated']);
         
-        scores['data'].forEach(function(element, i) {
+        scores['locations'].forEach(function(element, i) {
             var countryPath = d3.select("#code" + element.country_code);
             
             countryPath
@@ -245,11 +245,11 @@ Promise.all(promises).then(function(values) {
                     tooltip.select('#tooltip-confirmed')
                         .text(element.total.confirmed);
                     tooltip.select('#tooltip-deaths')
-                        .text(element.total.death);
+                        .text(element.total.deaths);
                     tooltip.select('#tooltip-recovered')
                         .text(element.total.recovered);
                     tooltip.select('#tooltip-active')
-                        .text(element.total.confirmed - element.total.recovered);
+                        .text(element.total.active);
                     legend.select("#cursor")
                         .attr('transform', 'translate(' + (legendCellSize + 5) + ', ' + (getColorIndex(quantile(+element.latest)) * legendCellSize) + ')')
                         .style("display", null);
@@ -275,4 +275,4 @@ Promise.all(promises).then(function(values) {
 }
 
 //creation de la map
-createMap('/v0/all/regrouped');
+createMap('/v1/all/grouped');

@@ -67,7 +67,7 @@ function createHistogramme(url, divId, divName, histColorClass) {
         // Construct my data object
         dataArray = [];
         var i = 0;
-
+        
         for(key in data) {
             //first iteration
             if (i == 0) {
@@ -81,6 +81,11 @@ function createHistogramme(url, divId, divName, histColorClass) {
             dataArray[i++] = {date, population}
         }
     
+        var xScale = d3.scaleTime()
+        .domain([new Date(dataArray[0]['date']), new Date(dataArray[dataArray.length - 1]['date'])])
+        .rangeRound([0, width]);
+
+        
         // Mise en relation du scale avec les données de notre fichier
         // Pour l'axe X, c'est la liste des pays
         // Pour l'axe Y, c'est le max des populations
@@ -92,12 +97,7 @@ function createHistogramme(url, divId, divName, histColorClass) {
         // Selection des noeuds text, positionnement puis rotation
         svg.append("g")
             .attr("transform", "translate(0," + height + ")")
-            .call(d3.axisBottom(x).tickSize(0))
-            .selectAll("text")	
-                .style("text-anchor", "end")
-                .attr("dx", "-.8em")
-                .attr("dy", ".15em")
-                .attr("transform", "rotate(-65)");
+            .call(d3.axisBottom(xScale));
         
         // Ajout de l'axe Y au SVG avec 6 éléments de légende en utilisant la fonction ticks (sinon D3JS en place autant qu'il peut).
         svg.append("g")
@@ -135,6 +135,6 @@ function createHistogramme(url, divId, divName, histColorClass) {
 }
 
 
-createHistogramme('/v0/confirmed/'+countryCode+'/'+provinceName, 'country_histo_confirmed', 'histo_confirmed', 'redBar');
-createHistogramme('/v0/deaths/'+countryCode+'/'+provinceName, 'country_histo_deaths', 'histo_deaths', 'redBar');
-createHistogramme('/v0/recovered/'+countryCode+'/'+provinceName, 'country_histo_recovered', 'histo_recovered', 'greenBar');
+createHistogramme('/v1/confirmed/'+countryCode+'/'+provinceName, 'country_histo_confirmed', 'histo_confirmed', 'redBar');
+createHistogramme('/v1/deaths/'+countryCode+'/'+provinceName, 'country_histo_deaths', 'histo_deaths', 'purpleBar');
+createHistogramme('/v1/recovered/'+countryCode+'/'+provinceName, 'country_histo_recovered', 'histo_recovered', 'greenBar');

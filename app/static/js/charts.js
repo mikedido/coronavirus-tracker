@@ -25,7 +25,7 @@ function createChart(url, divName, chartName, chartColor) {
 
     const margin = {top: 20, right: 30, bottom: 30, left: 60},
     width = document.getElementById(divName).offsetWidth * 0.95 - margin.left - margin.right,
-    height = 300 - margin.top - margin.bottom;
+    height = 250 - margin.top - margin.bottom;
 
     const parseTime = d3.timeParse("%m/%d/%Y");
     const dateFormat = d3.timeFormat("%m/%d/%Y");
@@ -60,7 +60,7 @@ function createChart(url, divName, chartName, chartColor) {
         dataArray = [];
         var i = 0;
 
-        for(key in data) {
+        for (key in data) {
             date = parseTime(key);
             volume = +data[key];
             close = +data[key];
@@ -83,7 +83,7 @@ function createChart(url, divName, chartName, chartColor) {
         svg.append("g")
             .call(d3.axisLeft(y))
             .append("text")
-                .attr("fill", "#000")
+                .attr("fill", "#FFF")
                 .attr("transform", "rotate(-90)")
                 .attr("y", 6)
                 .attr("dy", "0.71em")
@@ -104,16 +104,6 @@ function createChart(url, divName, chartName, chartColor) {
             .datum(dataArray)
             .attr("class", "line "+chartColor)
             .attr("d", line);
-
-         //Title construction
-        svg.append("text")
-            .attr("x", (width / 2))
-            .attr("y", -10)
-            .attr("text-anchor", "middle")
-            .style("fill", "white")
-            .style("font-weight", "300")
-            .style("font-size", "14px")
-            .text("Last updated : "+last_updated);
     });
 
     var div = d3.select("body").append("div")   
@@ -178,7 +168,9 @@ function createChart(url, divName, chartName, chartColor) {
     return d3;
 }
 
-
-createChart('/v0/confirmed/'+countryCode+'/'+provinceName, 'country_confirmed', 'chart_confirmed', "redLine");
-createChart('/v0/deaths/'+countryCode+'/'+provinceName, 'country_deaths', 'chart_deaths', 'redLine');
-createChart('/v0/recovered/'+countryCode+'/'+provinceName, 'country_recovered', 'chart_recovered', 'greenLine');
+/**
+ * Init the charts for a country
+ */
+createChart('/v1/confirmed/'+countryCode+'/'+provinceName, 'country_confirmed', 'chart_confirmed', "redLine");
+createChart('/v1/deaths/'+countryCode+'/'+provinceName, 'country_deaths', 'chart_deaths', 'purpleLine');
+createChart('/v1/recovered/'+countryCode+'/'+provinceName, 'country_recovered', 'chart_recovered', 'greenLine');
