@@ -1,3 +1,4 @@
+import re
 import requests
 from app import app
 from app.helpers import sorted_data
@@ -26,11 +27,15 @@ def country_stats(country_code):
     """
     The dashboard charts (deaths, confirmed, recovered) of country country
     """
+    # Check if the country code is compose by two letter and have a lenght of 2
+    if ( len(country_code) != 2 or not re.match('[a-zA-Z]', country_code)) :
+        return redirect(url_for('index'))
+    
     # Get the country name
     country_name = get_country_name(country_code)
     if country_name is not None:
         # Get country info
-        country_info = get_data_country(country_code)
+        country_info = get_data_country(country_code.upper())
         print(country_info['locations'][0]['total'])
         return render_template('country.html', country_code=country_code, country_name=country_name, country_info=country_info['locations'][0])
     return redirect(url_for('index'))
