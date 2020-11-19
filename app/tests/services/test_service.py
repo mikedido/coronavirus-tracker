@@ -3,7 +3,7 @@ from app import app
 from app import services
 
 
-class TestHelpers(unittest.TestCase):
+class TestService(unittest.TestCase):
 
     def test_get_data_keys_number(self):
         self.assertEqual(len(services.get_data('confirmed').keys()), 3)

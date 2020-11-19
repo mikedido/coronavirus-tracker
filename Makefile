@@ -3,6 +3,7 @@ TEST = app/tests/test_*
 
 test:
 	$(PYTHON) -m unittest $(TEST)
+	$(PYTHON) -m unittest app/tests/services/test*
 
 install:
 	pip install -r requirements.txt
