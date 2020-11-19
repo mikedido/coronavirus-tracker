@@ -171,6 +171,6 @@ function createChart(url, divName, chartName, chartColor) {
 /**
  * Init the charts for a country
  */
-createChart('/v1/confirmed/'+countryCode+'/'+provinceName, 'country_confirmed', 'chart_confirmed', "redLine");
-createChart('/v1/deaths/'+countryCode+'/'+provinceName, 'country_deaths', 'chart_deaths', 'purpleLine');
-createChart('/v1/recovered/'+countryCode+'/'+provinceName, 'country_recovered', 'chart_recovered', 'greenLine');
+createChart('/v1/confirmed/'+countryCode, 'country_confirmed', 'chart_confirmed', "redLine");
+createChart('/v1/deaths/'+countryCode, 'country_deaths', 'chart_deaths', 'purpleLine');
+createChart('/v1/recovered/'+countryCode, 'country_recovered', 'chart_recovered', 'greenLine');

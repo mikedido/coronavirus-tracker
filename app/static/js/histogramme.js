@@ -135,6 +135,6 @@ function createHistogramme(url, divId, divName, histColorClass) {
 }
 
 
-createHistogramme('/v1/confirmed/'+countryCode+'/'+provinceName, 'country_histo_confirmed', 'histo_confirmed', 'redBar');
-createHistogramme('/v1/deaths/'+countryCode+'/'+provinceName, 'country_histo_deaths', 'histo_deaths', 'purpleBar');
-createHistogramme('/v1/recovered/'+countryCode+'/'+provinceName, 'country_histo_recovered', 'histo_recovered', 'greenBar');
+createHistogramme('/v1/confirmed/'+countryCode, 'country_histo_confirmed', 'histo_confirmed', 'redBar');
+createHistogramme('/v1/deaths/'+countryCode, 'country_histo_deaths', 'histo_deaths', 'purpleBar');
+createHistogramme('/v1/recovered/'+countryCode, 'country_histo_recovered', 'histo_recovered', 'greenBar');

@@ -243,13 +243,13 @@ Promise.all(promises).then(function(values) {
                     tooltip.select('#tooltip-country')
                         .text(element.country);
                     tooltip.select('#tooltip-confirmed')
-                        .text(element.total.confirmed);
+                        .text(element.total.confirmed.toLocaleString());
                     tooltip.select('#tooltip-deaths')
-                        .text(element.total.deaths);
+                        .text(element.total.deaths.toLocaleString());
                     tooltip.select('#tooltip-recovered')
-                        .text(element.total.recovered);
+                        .text(element.total.recovered.toLocaleString());
                     tooltip.select('#tooltip-active')
-                        .text(element.total.active);
+                        .text(element.total.active.toLocaleString());
                     legend.select("#cursor")
                         .attr('transform', 'translate(' + (legendCellSize + 5) + ', ' + (getColorIndex(quantile(+element.latest)) * legendCellSize) + ')')
                         .style("display", null);
