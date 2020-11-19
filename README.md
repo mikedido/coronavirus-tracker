@@ -9,32 +9,39 @@
 
 ## About
 
-An app to analysis data about the corona virus / COVID-19 on the world by giving the number of deaths, confirmed and recovered person. 
+An app to analysis data about the corona virus / COVID-19  by giving the number of deaths, confirmed, active and recovered person on the world. 
 
-Also a charts and histogrammes available to evaluate the number of deaths, confirmed and recovered by country.
+The app give a detailed information for each country. charts and histogrammes are available to evaluate the number of deaths, confirmed and recovered by country.
 
-The app is avalable by clicking on the following link : https://corona-stats-world.herokuapp.com/
+The app is available by clicking on the following link : https://corona-stats-world.herokuapp.com/
 
 ## Screenshot
 
-<img src="images/map.png">
-<img src="images/charts.png" >
-<img src="images/histo.png" >
+### Version 1 (november 2020)
+<img src="images/v1/map1.png">
+<img src="images/v1/country_info.png" >
+<img src="images/v1/country_charts.png" >
+
+### Version 0 (march 2020)
+<img src="images/v0/map.png">
+<img src="images/v0/charts.png" >
+<img src="images/v0/histo.png" >
 
 
 ## Features
-* __Data__: Shows the most recent data.
+* __Data__: Shows the most recent data automatically.
 * __Distribution map__ with two levels of details:
   * __Countries__: When the user mouse over country on the map. Fewer details show the number of deaths, confirmed, recovered and active are shown.
-  * __List__ : list of the countries regrouped by deaths, confirmed and recovered+.
-* __Charts__:
+  * __List__ : list of the countries regrouped by deaths, confirmed, active and recovered+.
+* __Country__:
+   * __information__ detailed information about the country (population, recovered, confirmed, ...deaths per million, recovered per million,...case fatality).
+   * __provinces_list__ add province list of a country with the detailled information for each province.
    * __Confirmed chart__ for all countries.
    * __Deaths chart__ for all countries.
    * __Recovered chart__ for all country.
    * __Confirmed Histogramme__ the number of confirmed by day and by country
    * __Deaths Histogramme__ the number of deaths by day and by country
-   * __Recovered Histogramme__ the number of recovered by day and by country
-* __Red color scale__: Reflects the number of confirmed and death cases.
+   * __Recovered Histogramme__ the number of recovered by day and by country 
 
 ## How to Use
 #### Build from source code
@@ -58,8 +65,8 @@ make lint
 ## TODO
 
 * __Search__ for countries & cities.
-* __Cities__ add détails of the cities
-* __Chart__ add map by country and their détails by city
+* __Cities__ add détails of the cities.
+* __Chart__ add map by country and their détails by city.
 * __Share__ stats & charts as images.
 * __Statistics__: Including the number of confirmed, recovered, and deaths, in addition to percents.
 
