@@ -1,4 +1,5 @@
 from app import app
+from app.utils import checker
 from flask import jsonify, Blueprint
 from app.services.jhu import get_all_data, get_all_data_by_category, get_data_country, get_all_data_grouped_by_country, get_data_country_by_category_by_province
 
@@ -48,22 +49,28 @@ def v1_api_confirmed():
     return jsonify(sorted(data['locations'], key=lambda k: k.get('total', 0), reverse=True))
 
 
-@version1.route('/<string:category>/<country_code>/', defaults={'province_name': ''})
-@version1.route('/<string:category>/<country_code>/<province_name>')
-def v1_api_category_country(category, country_code, province_name):
+@version1.route('/<string:category>/<country_code>')
+def v1_api_category_country(category, country_code):
     """
     Get all the historic confirmed, deaths or recovered by country and/or provinces
     """
+     # Check the country code format
+    if (not checker.country_code_format(country_code)) :
+        return ''
+
     if category.lower() not in ('confirmed', 'deaths', 'recovered'):
         return ''
 
-    return get_data_country_by_category_by_province(category, country_code, province_name)
+    return get_data_country_by_category_by_province(category, country_code)
 
 
-@version1.route('/country/<country_code>/', defaults={'province_name': ''})
-@version1.route('/country/<country_code>/<province_name>')
-def v1_api_data_country(country_code, province_name):
+@version1.route('/country/<country_code>')
+def v1_api_data_country(country_code):
     """
     Get all the country information about confirmed, deaths, recovered and also by provences
     """
-    return jsonify(get_data_country(country_code, province_name))
+     # Check the country code format
+    if (not checker.country_code_format(country_code)) :
+        return ''
+
+    return jsonify(get_data_country(country_code))

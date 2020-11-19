@@ -52,7 +52,7 @@ def get_all_data_by_category(category):
 
 
 @cached(cache=TTLCache(maxsize=1024, ttl=3600))
-def get_data_country_by_category_by_province(category, country_code, province_name='', administration=''):
+def get_data_country_by_category_by_province(category, country_code):
     """
     Get all the data of a country by category. There is three category (confirmed | death | recovered)
     """
@@ -61,7 +61,7 @@ def get_data_country_by_category_by_province(category, country_code, province_na
     locations = []
 
     for item in data:
-        if country_code == countrycodes.country_code(item['Country/Region']):
+        if country_code.upper() == countrycodes.country_code(item['Country/Region']):
             # Filter out all the dates.
             history = dict(filter(lambda element: date_util.is_date(element[0]), item.items()))
             # Sorted date history
@@ -87,7 +87,7 @@ def get_data_country_by_category_by_province(category, country_code, province_na
 
     # By country and province
     for country in locations:
-        if country['country_code'] == country_code.upper() and country['province'].lower() == province_name.lower():
+        if country['country_code'] == country_code.upper() and country['province'] == '':
             return {
                 'data': country['history'],
                 'country': country['country'],
@@ -139,7 +139,7 @@ def get_all_data():
     }
 
 
-def get_data_country(country_code, province_name=''):
+def get_data_country(country_code):
     """
     Get the data information (death, confirmed, recovered, ) of a country and theirs province.
     """
@@ -149,7 +149,7 @@ def get_data_country(country_code, province_name=''):
         {
             'country': '',
             'country_code': '',
-            'population': get_population_by_county(country_code),
+            'population': get_population_by_county(country_code.upper()),
             'total' : {
                 'confirmed' : '',
                 'deaths' : '',
@@ -164,7 +164,7 @@ def get_data_country(country_code, province_name=''):
     provinces = []
 
     for item in data:
-        if countrycodes.country_code(item['Country_Region']) == country_code and item['Province_State'] == province_name:
+        if countrycodes.country_code(item['Country_Region']) == country_code.upper() and item['Province_State'] == '':
             locations[0]['country'] = item['Country_Region']
             locations[0]['country_code'] = countrycodes.country_code(item['Country_Region'])
             locations[0]['total']['confirmed'] = item['Confirmed']
@@ -174,7 +174,7 @@ def get_data_country(country_code, province_name=''):
             locations[0]['total']['Incident_Rate'] = item['Incident_Rate']
             locations[0]['total']['Case_Fatality_Ratio'] = item['Case_Fatality_Ratio']
         # Add the provinces info to the country mother
-        if countrycodes.country_code(item['Country_Region']) == country_code and province_name == '' and item['Province_State'] != '':
+        if countrycodes.country_code(item['Country_Region']) == country_code and item['Province_State'] != '':
             locations[0]['country'] = item['Country_Region']
             locations[0]['country_code'] = countrycodes.country_code(item['Country_Region'])
             provinces.append({

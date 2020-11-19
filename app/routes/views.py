@@ -1,6 +1,7 @@
 import re
 import requests
 from app import app
+from app.utils import checker
 from app.helpers import sorted_data
 from app.services import get_country_name
 from flask import render_template, redirect, url_for, json
@@ -28,7 +29,7 @@ def country_stats(country_code):
     The dashboard charts (deaths, confirmed, recovered) of country country
     """
     # Check if the country code is compose by two letter and have a lenght of 2
-    if ( len(country_code) != 2 or not re.match('[a-zA-Z]', country_code)) :
+    if (not checker.country_code_format(country_code) ) :
         return redirect(url_for('index'))
     
     # Get the country name
