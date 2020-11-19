@@ -23,15 +23,16 @@ def index():
         total_active=data['latest']['active']
     )
 
+
 @app.route('/<country_code>/')
 def country_stats(country_code):
     """
     The dashboard charts (deaths, confirmed, recovered) of country country
     """
     # Check if the country code is compose by two letter and have a lenght of 2
-    if (not checker.country_code_format(country_code) ) :
+    if (not checker.country_code_format(country_code)):
         return redirect(url_for('index'))
-    
+
     # Get the country name
     country_name = get_country_name(country_code)
     if country_name is not None:
@@ -40,6 +41,7 @@ def country_stats(country_code):
         print(country_info['locations'][0]['total'])
         return render_template('country.html', country_code=country_code, country_name=country_name, country_info=country_info['locations'][0])
     return redirect(url_for('index'))
+
 
 @app.errorhandler(404)
 def page_not_found(error):

@@ -11,6 +11,7 @@ from app.utils import countrycodes, date as date_util
 
 request = Request()
 
+
 @cached(cache=TTLCache(maxsize=1024, ttl=3600))
 def get_all_data_by_category(category):
     """
@@ -81,8 +82,8 @@ def get_data_country_by_category_by_province(category, country_code):
                 # Latest statistic.
                 'total': int(latest or 0),
             })
-    
-    #check if the country without province exist
+
+    # Check if the country without province exist
     data_country_all_province = []
 
     # By country and province
@@ -95,11 +96,11 @@ def get_data_country_by_category_by_province(category, country_code):
                 'province': country['province'],
                 'last_updated': ''
             }
-    #otherwise regrouped all provinces of the country
+    # Otherwise regrouped all provinces of the country
     for country in locations:
         if country['country_code'] == country_code.upper():
             data_country_all_province.append(country['history'])
-    
+
     return {
         'data': data_country_by_province(data_country_all_province),
         'country': country['country'],
@@ -123,13 +124,13 @@ def get_all_data():
             'country': item['Country_Region'],
             'country_code': countrycodes.country_code(item['Country_Region']),
             'province': item['Province_State'],
-            'total' : {
-                'confirmed' : item['Confirmed'],
-                'deaths' : item['Deaths'],
-                'recovered' : item['Recovered'],
-                'active' : item['Active'],
-                'Incident_Rate' : item['Incident_Rate'],
-                'Case_Fatality_Ratio' : item['Case_Fatality_Ratio']
+            'total': {
+                'confirmed': item['Confirmed'],
+                'deaths': item['Deaths'],
+                'recovered': item['Recovered'],
+                'active': item['Active'],
+                'Incident_Rate': item['Incident_Rate'],
+                'Case_Fatality_Ratio': item['Case_Fatality_Ratio']
             }
         })
 
@@ -150,13 +151,13 @@ def get_data_country(country_code):
             'country': '',
             'country_code': '',
             'population': get_population_by_county(country_code.upper()),
-            'total' : {
-                'confirmed' : '',
-                'deaths' : '',
-                'recovered' : '',
-                'active' : '',
-                'Incident_Rate' : '',
-                'Case_Fatality_Ratio' : ''
+            'total': {
+                'confirmed': '',
+                'deaths': '',
+                'recovered': '',
+                'active': '',
+                'Incident_Rate': '',
+                'Case_Fatality_Ratio': ''
             },
             'provinces': []
         }
@@ -180,38 +181,36 @@ def get_data_country(country_code):
             provinces.append({
                 'name': item['Province_State'],
                 'administration': item['Admin2'],
-                #'population': get_population_by_province(item['Province_State'], item['Admin2']),
-                'total' : {
-                    'confirmed' : item['Confirmed'],
-                    'deaths' : item['Deaths'],
-                    'recovered' : item['Recovered'],
-                    'active' : item['Active'],
-                    'Incident_Rate' : item['Incident_Rate'],
-                    'Case_Fatality_Ratio' : item['Case_Fatality_Ratio']
+                'total': {
+                    'confirmed': item['Confirmed'],
+                    'deaths': item['Deaths'],
+                    'recovered': item['Recovered'],
+                    'active': item['Active'],
+                    'Incident_Rate': item['Incident_Rate'],
+                    'Case_Fatality_Ratio': item['Case_Fatality_Ratio']
                 }
             })
 
-    #add all the provinces
+    # Add all the provinces
     locations[0]['provinces'] = provinces
-    
-    #check the global result of the country
+
+    # Check the global result of the country
     if locations[0]['total']['confirmed'] == '':
         locations[0]['total']['confirmed'] = sum(int(province['total']['confirmed']) for province in locations[0]['provinces'])
         locations[0]['total']['deaths'] = sum(int(province['total']['deaths']) for province in locations[0]['provinces'])
         locations[0]['total']['active'] = sum(int(province['total']['active']) for province in locations[0]['provinces'] if province['total']['active'] != '')
         locations[0]['total']['recovered'] = sum(int(province['total']['recovered']) for province in locations[0]['provinces'])
-    
-    #add population for provinces
-    #ouverture du fichier
+
+    # Open file and add population for provinces
     data = request.get_data_info_country()
     for province in locations[0]['provinces']:
         province['population'] = get_population_by_province(data, province['name'], province['administration'])
 
-    #result
     return {
         'locations': locations,
         'last_updated': datetime.utcnow().isoformat() + 'Z'
     }
+
 
 @cached(cache=TTLCache(maxsize=1024, ttl=3600))
 def get_all_data_grouped_by_country():
@@ -219,32 +218,30 @@ def get_all_data_grouped_by_country():
     Get all the data information (death, confirmed, recovered,) grouped by country (Many country have many provinces).
     """
     data = request.get_data_daily_reports()
-    
     locations = []
     country_added = {}
     index = 0
     total_confirmed = 0
     total_deaths = 0
     total_recovered = 0
-    
 
     for item in data:
         # country/province exist
         country_code = countrycodes.country_code(item['Country_Region'])
 
-        if not country_code in country_added or country_code == 'XX':
+        if country_code not in country_added or country_code == 'XX':
             locations.append({
                 'country': item['Country_Region'],
                 'country_code': country_code,
-                'total' : {
-                    'confirmed' : int(item['Confirmed']),
-                    'deaths' : int(item['Deaths']),
-                    'recovered' : int(item['Recovered']),
-                    'active' : ('0' if item['Active'] == '' else int(item['Active']))
+                'total': {
+                    'confirmed': int(item['Confirmed']),
+                    'deaths': int(item['Deaths']),
+                    'recovered': int(item['Recovered']),
+                    'active': ('0' if item['Active'] == '' else int(item['Active']))
                 }
             })
             country_added[country_code] = index
-            index +=1
+            index += 1
         else:
             locations[country_added[country_code]]['total']['confirmed'] += int(item['Confirmed'])
             locations[country_added[country_code]]['total']['recovered'] += int(item['Recovered'])
@@ -254,7 +251,6 @@ def get_all_data_grouped_by_country():
         total_confirmed += int(item['Confirmed'])
         total_deaths += int(item['Deaths'])
         total_recovered += int(item['Recovered'])
-
 
     return {
         'locations': locations,
@@ -280,12 +276,13 @@ def get_population_by_county(country_code):
 
     return ''
 
+
 def get_population_by_province(data, province_name, adminitration):
     """
-    Get the population of a country by 
+    Get the population of a province of a country
     """
     for item in data:
-        if item['Province_State'] == province_name and item['Admin2']== adminitration:
+        if item['Province_State'] == province_name and item['Admin2'] == adminitration:
             return item['Population']
 
     return ''

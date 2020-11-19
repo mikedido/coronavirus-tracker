@@ -2,6 +2,7 @@ import unittest
 from app import app
 from app.services.jhu import get_all_data, get_data_country
 
+
 class TestJhu(unittest.TestCase):
 
     def test_get_all_data(self):

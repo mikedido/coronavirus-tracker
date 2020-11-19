@@ -10,6 +10,7 @@ Version 0 of the API
 
 version0 = Blueprint('v0', __name__, url_prefix='/v0')
 
+
 @version0.route('/recovered')
 def api_recovered():
     """
@@ -69,6 +70,7 @@ def api_confirmed_country(category, country_code, province_name):
         'data': data_country_by_province(data_country_all_province),
         'last_updated': ''
     }
+
 
 @version0.route('/all')
 def api_all():

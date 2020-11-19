@@ -2,14 +2,15 @@ import unittest
 from app import app
 from app.services.request import Request
 
+
 class TestRequest(unittest.TestCase):
 
     def test_get_data_info_country(self):
         self.assertTrue(self.request.get_data_info_country())
-    
+
     def test_get_data_time_series_confirmed(self):
         self.assertTrue(self.request.get_data_time_series('confirmed'))
-    
+
     def test_get_data_time_series_recovered(self):
         self.assertTrue(self.request.get_data_time_series('recovered'))
 
