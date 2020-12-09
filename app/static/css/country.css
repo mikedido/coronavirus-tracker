@@ -124,3 +124,11 @@ tbody tr:hover{
   border-bottom: 1px solid;
   height: 48px;
 }
+
+.header {
+  overflow: auto;
+}
+
+.country-title {
+  float: left;
+}
