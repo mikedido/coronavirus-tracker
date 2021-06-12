@@ -199,7 +199,7 @@ def get_data_country(country_code):
         locations[0]['total']['confirmed'] = sum(int(province['total']['confirmed']) for province in locations[0]['provinces'])
         locations[0]['total']['deaths'] = sum(int(province['total']['deaths']) for province in locations[0]['provinces'])
         locations[0]['total']['active'] = sum(int(province['total']['active']) for province in locations[0]['provinces'] if province['total']['active'] != '')
-        locations[0]['total']['recovered'] = sum(int(province['total']['recovered']) for province in locations[0]['provinces'])
+        locations[0]['total']['recovered'] = sum(int(province['total']['recovered']) for province in locations[0]['provinces'] if province['total']['recovered'] != '')
 
     # Open file and add population for provinces
     data = request.get_data_info_country()
@@ -236,21 +236,21 @@ def get_all_data_grouped_by_country():
                 'total': {
                     'confirmed': int(item['Confirmed']),
                     'deaths': int(item['Deaths']),
-                    'recovered': int(item['Recovered']),
-                    'active': ('0' if item['Active'] == '' else int(item['Active']))
+                    'recovered': int(item['Recovered'] or 0),
+                    'active': int(item['Active'] or 0)
                 }
             })
             country_added[country_code] = index
             index += 1
         else:
             locations[country_added[country_code]]['total']['confirmed'] += int(item['Confirmed'])
-            locations[country_added[country_code]]['total']['recovered'] += int(item['Recovered'])
-            locations[country_added[country_code]]['total']['active'] += (0 if item['Active'] == '' else int(item['Active']))
+            locations[country_added[country_code]]['total']['recovered'] += int(item['Recovered'] or 0)
+            locations[country_added[country_code]]['total']['active'] += int(item['Active'] or 0)
             locations[country_added[country_code]]['total']['deaths'] += int(item['Deaths'])
 
         total_confirmed += int(item['Confirmed'])
         total_deaths += int(item['Deaths'])
-        total_recovered += int(item['Recovered'])
+        total_recovered += int(item['Recovered'] or 0)
 
     return {
         'locations': locations,
